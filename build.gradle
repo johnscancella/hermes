@@ -24,21 +24,19 @@ repositories {
 }
 
 dependencies {
-	/**compile ("org.springframework.boot:spring-boot-starter-web") {
+	compile ("org.springframework.boot:spring-boot-starter-web") {
         exclude module: "spring-boot-starter-tomcat"
-    }*/
+    }
 
-    compile 'org.springframework.boot:spring-boot-starter-web:1.0.0.RELEASE',
-	'org.springframework.boot:spring-boot-starter-web',
-	'org.springframework:spring-context:4.0.3.RELEASE',
+    compile 'org.springframework:spring-context:4.0.3.RELEASE',
 	'org.springframework.webflow:spring-webflow:2.3.3.RELEASE',    
-    'org.springframework.boot:spring-boot-starter-jetty',
-	'org.springframework.boot:spring-boot-starter-actuator',
+    "org.springframework.boot:spring-boot-starter-jetty",
+	"org.springframework.boot:spring-boot-starter-actuator",
 	'org.springframework.boot:spring-boot-starter-thymeleaf',
 	'org.springframework.integration:spring-integration-core:3.0.2.RELEASE',
 	'org.springframework.integration:spring-integration-stream:2.1.0.RELEASE',
 	'commons-collections:commons-collections:3.0'
 	
-    testCompile 'junit:junit:4.+'
+    testCompile "junit:junit:4.+"
 }
 
