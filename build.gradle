@@ -1,0 +1,44 @@
+buildscript {
+    repositories {
+        maven { url "http://repo.spring.io/libs-milestone" }
+        mavenLocal()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.1.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin:'application'
+apply plugin: 'spring-boot'
+
+mainClassName = "com.scancella.hermes.Main"
+
+repositories {
+    mavenCentral()
+    //example for when I implement my own repository, i.e. Nexus
+    //ivy {
+    //      url "http://localhost:8081/nexus/content/groups/public"
+    //}
+}
+
+dependencies {
+	/**compile ("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: "spring-boot-starter-tomcat"
+    }*/
+
+    compile 'org.springframework.boot:spring-boot-starter-web:1.0.0.RELEASE',
+	'org.springframework.boot:spring-boot-starter-web',
+	'org.springframework:spring-context:4.0.3.RELEASE',
+	'org.springframework.webflow:spring-webflow:2.3.3.RELEASE',    
+    'org.springframework.boot:spring-boot-starter-jetty',
+	'org.springframework.boot:spring-boot-starter-actuator',
+	'org.springframework.boot:spring-boot-starter-thymeleaf',
+	'org.springframework.integration:spring-integration-core:3.0.2.RELEASE',
+	'org.springframework.integration:spring-integration-stream:2.1.0.RELEASE',
+	'commons-collections:commons-collections:3.0'
+	
+    testCompile 'junit:junit:4.+'
+}
+
