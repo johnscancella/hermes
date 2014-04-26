@@ -9,7 +9,7 @@ import org.junit.Assert;
 /**
  * adds some nice methods to the basic Assert class. Does not start up spring context for faster testing
  */
-public class SimpleTest extends Assert
+public abstract class SimpleTest extends Assert
 {
   private static final String PATTERN = "yyyy-MM-dd HH:mm:ss";
   
