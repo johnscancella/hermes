@@ -37,7 +37,7 @@ public class NetworkRestController extends LoggingObject
     return jsonServerMapper.toJson(adjacentServers);
   }
   
-  @RequestMapping("/addAdjacentServer")
+  @RequestMapping("/addAdjacentServer.do")
   public boolean addAdjacentServer(@RequestParam(value="name", required=true) String serverName, @RequestParam(value="ip", required=true) String ipAddress) 
   {    
     adjacentServers.add(new Server(serverName, ipAddress));
