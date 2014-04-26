@@ -10,10 +10,8 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
-apply plugin:'application'
+apply plugin: 'application'
 apply plugin: 'spring-boot'
-
-mainClassName = "com.scancella.hermes.Main"
 
 repositories {
     mavenCentral()
@@ -35,7 +33,8 @@ dependencies {
 	'org.springframework.boot:spring-boot-starter-thymeleaf',
 	'org.springframework.integration:spring-integration-core:3.0.2.RELEASE',
 	'org.springframework.integration:spring-integration-stream:2.1.0.RELEASE',
-	'commons-collections:commons-collections:3.0'
+	'commons-collections:commons-collections:3.0',
+	'org.apache.httpcomponents:httpclient:4.1.1'
 	
     testCompile "junit:junit:4.+"
 }
