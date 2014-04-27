@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.scancella.hermes.domain.Server;
+import com.scancella.hermes.network.domain.Server;
 
 @Component
 public class JsonServerMapper implements JsonMapper<Server>

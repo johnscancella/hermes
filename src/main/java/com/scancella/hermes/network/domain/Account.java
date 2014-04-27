@@ -1,4 +1,4 @@
-package com.scancella.hermes.domain;
+package com.scancella.hermes.network.domain;
 
 /**
  * Account to use when connecting to a server

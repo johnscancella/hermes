@@ -1,6 +1,6 @@
 package com.scancella.hermes.rules;
 
-import com.scancella.hermes.domain.Server;
+import com.scancella.hermes.network.domain.Server;
 
 /**
  * Used to create a routing rule for any file received. Any file in the scan directory that matches the regex will be send to the specified server.

@@ -6,6 +6,10 @@ import java.util.List;
 import org.junit.Test;
 
 import com.scancella.hermes.SimpleTest;
+import com.scancella.hermes.network.domain.Account;
+import com.scancella.hermes.network.domain.Route;
+import com.scancella.hermes.network.domain.Server;
+import com.scancella.hermes.network.domain.ServerAccountLink;
 
 public class RouteTest extends SimpleTest
 {

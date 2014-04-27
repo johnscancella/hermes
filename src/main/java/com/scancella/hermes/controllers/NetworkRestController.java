@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.scancella.hermes.domain.LoggingObject;
-import com.scancella.hermes.domain.Server;
+import com.scancella.hermes.core.LoggingObject;
 import com.scancella.hermes.mappers.JsonMapper;
+import com.scancella.hermes.network.domain.Server;
 
 /**
  * Provides a rest interface for querying about the network for this server.

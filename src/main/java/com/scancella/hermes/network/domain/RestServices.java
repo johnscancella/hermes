@@ -1,8 +1,7 @@
-package com.scancella.hermes.domain;
+package com.scancella.hermes.network.domain;
 
 public enum RestServices
 {
-  ROUTE("route", "route.do"), //TODO evaluate if I still need this one...
   GET_ADJACENT_SERVERS("getAdjacentServers", "getAdjacentServers.do"),
   ADD_ADJACENT_SERVER("addAdjacentServer", "addAdjacentServer.do");
   

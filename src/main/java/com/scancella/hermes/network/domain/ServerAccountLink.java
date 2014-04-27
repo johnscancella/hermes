@@ -1,4 +1,5 @@
-package com.scancella.hermes.domain;
+package com.scancella.hermes.network.domain;
+
 
 public class ServerAccountLink
 {

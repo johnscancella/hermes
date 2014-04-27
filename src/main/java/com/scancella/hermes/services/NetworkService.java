@@ -2,7 +2,7 @@ package com.scancella.hermes.services;
 
 import java.util.List;
 
-import com.scancella.hermes.domain.Server;
+import com.scancella.hermes.network.domain.Server;
 
 public interface NetworkService
 {

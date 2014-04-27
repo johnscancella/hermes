@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import org.springframework.core.io.Resource;
 
+import com.scancella.hermes.network.domain.Route;
+import com.scancella.hermes.network.domain.ServerAccountLink;
+
 /**
  * POJO for storing the data to send, the route of servers to take, and what directory to store the data in.
  */

@@ -1,4 +1,4 @@
-package com.scancella.hermes.domain;
+package com.scancella.hermes.network.domain;
 
 import java.util.UUID;
 

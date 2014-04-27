@@ -14,10 +14,10 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.scancella.hermes.domain.LoggingObject;
-import com.scancella.hermes.domain.RestServices;
-import com.scancella.hermes.domain.Server;
+import com.scancella.hermes.core.LoggingObject;
 import com.scancella.hermes.mappers.JsonMapper;
+import com.scancella.hermes.network.domain.RestServices;
+import com.scancella.hermes.network.domain.Server;
 
 public class DefaultNetworkService extends LoggingObject implements NetworkService
 {
