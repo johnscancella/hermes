@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 
 @Configuration
-@ComponentScan({ "com.scancella.hermes.services", "com.scancella.hermes.controllers", "com.scancella.hermes.mappers" })
+@ComponentScan({ "com.scancella.hermes.**.services", "com.scancella.hermes.**.controllers", "com.scancella.hermes.mappers" })
 @EnableAutoConfiguration
 @ImportResource({ "classpath:META-INF/*-spring.xml" })
 public class Main
