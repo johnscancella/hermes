@@ -1,4 +1,4 @@
-package com.scancella.hermes.services;
+package com.scancella.hermes.network.services;
 
 import java.io.BufferedReader;
 import java.io.IOException;
