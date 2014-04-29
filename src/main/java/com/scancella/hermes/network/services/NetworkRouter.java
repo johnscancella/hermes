@@ -14,7 +14,7 @@ import com.scancella.hermes.network.domain.Vertex;
  * Implements Dijkstra's shortest path algorithm 
  */
 public class NetworkRouter
-{  
+{
   public List<Server> computeShortestPath(Vertex source, Vertex to) throws NetworkPathNotFound
   {   
     source.setMinDistance(0.0);
@@ -23,32 +23,31 @@ public class NetworkRouter
     vertexQueue.add(source);
     while(!vertexQueue.isEmpty())
     {
-      Vertex u = vertexQueue.poll();
-      // Visit each edge exiting u
-      for(Edge e : u.getAdjacencies())
+      Vertex currentVertex = vertexQueue.poll();
+      
+      for(Edge edge : currentVertex.getAdjacencies())
       {
-        Vertex v = e.getTarget();
-        double weight = e.getWeight();
-        double distanceThroughU = u.getMinDistance() + weight;
+        Vertex adjacentVertex = edge.getTarget();
+        double weight = edge.getWeight();
+        double distanceThroughCurrentVertex = currentVertex.getMinDistance() + weight;
         
-        if(v.getServer().equals(to.getServer()))
+        if(adjacentVertex.getServer().equals(to.getServer()))
         {
-          v.setMinDistance(distanceThroughU);
-          v.setPrevious(u);
-          return getShortestPathTo(v);
+          adjacentVertex.setMinDistance(distanceThroughCurrentVertex);
+          adjacentVertex.setPrevious(currentVertex);
+          return getShortestPathTo(adjacentVertex);
         }
-        if( distanceThroughU < v.getMinDistance() )
+        if( distanceThroughCurrentVertex < adjacentVertex.getMinDistance() )
         {
-          vertexQueue.remove(v);
-          v.setMinDistance(distanceThroughU);
-          v.setPrevious(u);
-          vertexQueue.add(v);
+          vertexQueue.remove(adjacentVertex);
+          adjacentVertex.setMinDistance(distanceThroughCurrentVertex);
+          adjacentVertex.setPrevious(currentVertex);
+          vertexQueue.add(adjacentVertex);
         }
       }
     }
     
-    
-    throw new NetworkPathNotFound("");
+    throw throwNetworkPathNotFound(source, to);
   }
   
   public static List<Server> getShortestPathTo(Vertex target)
@@ -63,13 +62,13 @@ public class NetworkRouter
     return path;
   }
   
-  protected void throwNetworkPathNotFound(Vertex source, Vertex to) throws NetworkPathNotFound
+  protected NetworkPathNotFound throwNetworkPathNotFound(Vertex source, Vertex to)
   {
     StringBuilder sb = new StringBuilder();
     
     sb.append("Could not find a network path from ");
     sb.append(source.getServer()).append("to ").append(to.getServer());
     
-    throw new NetworkPathNotFound(sb.toString());
+    return new NetworkPathNotFound(sb.toString());
   }
 }
