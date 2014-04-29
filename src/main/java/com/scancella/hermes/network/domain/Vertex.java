@@ -1,9 +1,12 @@
 package com.scancella.hermes.network.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Vertex implements Comparable<Vertex>
 {
   private final Server server;
-  private Edge[] adjacencies;
+  private List<Edge> adjacencies = new ArrayList<>();
   private double minDistance = Double.POSITIVE_INFINITY;
   private Vertex previous;
 
@@ -23,12 +26,12 @@ public class Vertex implements Comparable<Vertex>
     return Double.compare(minDistance, other.minDistance);
   }
 
-  public Edge[] getAdjacencies()
+  public List<Edge> getAdjacencies()
   {
     return adjacencies;
   }
 
-  public void setAdjacencies(Edge[] adjacencies)
+  public void setAdjacencies(List<Edge> adjacencies)
   {
     this.adjacencies = adjacencies;
   }

@@ -13,11 +13,13 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.scancella.hermes.mappers.JsonMapper;
 import com.scancella.hermes.network.domain.RestServices;
 import com.scancella.hermes.network.domain.Server;
 
+@Component
 public class AdjacentServerHandler
 {
   //TODO make this configurable
@@ -26,7 +28,13 @@ public class AdjacentServerHandler
   @Autowired
   private JsonMapper<Server> jsonServerMapper;
   
-  public InputStream sendRequestForAdjacentServers(Server server) throws ClientProtocolException, IOException
+  public List<Server> getAdjacentServers(Server server) throws ClientProtocolException, IOException
+  {
+    InputStream stream = sendRequestForAdjacentServers(server);
+    return parseServers(stream);
+  }
+  
+  protected InputStream sendRequestForAdjacentServers(Server server) throws ClientProtocolException, IOException
   {
     DefaultHttpClient httpClient = new DefaultHttpClient();
     

@@ -33,11 +33,11 @@ public class NetworkRouterTest extends SimpleTest
     Vertex v5 = new Vertex(server5);
     
     
-    v1.setAdjacencies(new Edge[] {new Edge(v2, 1.0), new Edge(v3, 1.0), new Edge(v4, 1.0)});
-    v2.setAdjacencies(new Edge[] {new Edge(v1, 1.0), new Edge(v5, 1.0)});
-    v3.setAdjacencies(new Edge[] {new Edge(v1, 1.0), new Edge(v4, 1.0)});
-    v4.setAdjacencies(new Edge[] {new Edge(v1, 1.0), new Edge(v3, 1.0), new Edge(v5, 1.0)});
-    v5.setAdjacencies(new Edge[] {new Edge(v2, 1.0), new Edge(v3, 1.0)});
+    v1.setAdjacencies(Arrays.asList(new Edge(v2, 1.0), new Edge(v3, 1.0), new Edge(v4, 1.0)));
+    v2.setAdjacencies(Arrays.asList(new Edge(v1, 1.0), new Edge(v5, 1.0)));
+    v3.setAdjacencies(Arrays.asList(new Edge(v1, 1.0), new Edge(v4, 1.0)));
+    v4.setAdjacencies(Arrays.asList(new Edge(v1, 1.0), new Edge(v3, 1.0), new Edge(v5, 1.0)));
+    v5.setAdjacencies(Arrays.asList(new Edge(v2, 1.0), new Edge(v3, 1.0)));
     
     List<Server> path = sut.computeShortestPath(v1, v5);
     assertEquals("The expected should be from server1 to server2 to server5", expectedServerPath, path);
@@ -59,10 +59,10 @@ public class NetworkRouterTest extends SimpleTest
     Vertex v5 = new Vertex(server5);
     
     
-    v1.setAdjacencies(new Edge[] {new Edge(v2, 1.0), new Edge(v3, 1.0), new Edge(v4, 1.0)});
-    v2.setAdjacencies(new Edge[] {new Edge(v1, 1.0)});
-    v3.setAdjacencies(new Edge[] {new Edge(v1, 1.0), new Edge(v4, 1.0)});
-    v4.setAdjacencies(new Edge[] {new Edge(v1, 1.0), new Edge(v3, 1.0)});
+    v1.setAdjacencies(Arrays.asList(new Edge(v2, 1.0), new Edge(v3, 1.0), new Edge(v4, 1.0)));
+    v2.setAdjacencies(Arrays.asList(new Edge(v1, 1.0)));
+    v3.setAdjacencies(Arrays.asList(new Edge(v1, 1.0), new Edge(v4, 1.0)));
+    v4.setAdjacencies(Arrays.asList(new Edge(v1, 1.0), new Edge(v3, 1.0)));
     
     sut.computeShortestPath(v1, v5);
   }
