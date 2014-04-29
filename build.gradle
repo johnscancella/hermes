@@ -34,7 +34,8 @@ dependencies {
 	'org.springframework.integration:spring-integration-core:3.0.2.RELEASE',
 	'org.springframework.integration:spring-integration-stream:2.1.0.RELEASE',
 	'commons-collections:commons-collections:3.0',
-	'org.apache.httpcomponents:httpclient:4.1.1'
+	'org.apache.httpcomponents:httpclient:4.1.1',
+	'commons-lang:commons-lang:2.6'
 	
     testCompile "junit:junit:4.+",
 	'org.springframework:spring-test:4.0.3.RELEASE'

@@ -10,4 +10,6 @@ public interface NetworkService
    * Provides a list of adjacent server nodes in the network to the specified server
    */
   public List<Server> getAdjacentServers(Server node) throws Exception;
+  
+  public List<Server> getShortestRoute(Server from, Server to);
 }

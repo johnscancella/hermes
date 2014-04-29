@@ -1,21 +1,21 @@
 package com.scancella.hermes.network.domain;
 
-public class Vertex
+public class Vertex implements Comparable<Vertex>
 {
-  private final String name;
+  private final Server server;
   private Edge[] adjacencies;
   private double minDistance = Double.POSITIVE_INFINITY;
   private Vertex previous;
 
-  public Vertex(String argName)
+  public Vertex(Server server)
   {
-    name = argName;
+    this.server = server;
   }
 
   @Override
   public String toString()
   {
-    return name;
+    return server.getName();
   }
 
   public int compareTo(Vertex other)
@@ -53,8 +53,8 @@ public class Vertex
     this.previous = previous;
   }
 
-  public String getName()
+  public Server getServer()
   {
-    return name;
+    return server;
   }
 }

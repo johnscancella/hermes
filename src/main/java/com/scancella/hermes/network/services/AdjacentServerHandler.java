@@ -14,12 +14,11 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.scancella.hermes.core.LoggingObject;
 import com.scancella.hermes.mappers.JsonMapper;
 import com.scancella.hermes.network.domain.RestServices;
 import com.scancella.hermes.network.domain.Server;
 
-public class DefaultNetworkService extends LoggingObject implements NetworkService
+public class AdjacentServerHandler
 {
   //TODO make this configurable
   private static final int PORT = 8080;
@@ -27,16 +26,7 @@ public class DefaultNetworkService extends LoggingObject implements NetworkServi
   @Autowired
   private JsonMapper<Server> jsonServerMapper;
   
-  @Override
-  public List<Server> getAdjacentServers(Server node) throws Exception
-  {
-    InputStream responseContent = sendRequestForAdjacentServers(node);
-    List<Server> adjacentServers = parseServers(responseContent);
-    
-    return adjacentServers;
-  }
-  
-  protected InputStream sendRequestForAdjacentServers(Server server) throws ClientProtocolException, IOException
+  public InputStream sendRequestForAdjacentServers(Server server) throws ClientProtocolException, IOException
   {
     DefaultHttpClient httpClient = new DefaultHttpClient();
     
@@ -79,7 +69,7 @@ public class DefaultNetworkService extends LoggingObject implements NetworkServi
     return true;
   }
   
-  protected List<Server> parseServers(InputStream responseContent) throws IOException
+  public List<Server> parseServers(InputStream responseContent) throws IOException
   {
     List<Server> servers = new ArrayList<>();
     
@@ -102,12 +92,5 @@ public class DefaultNetworkService extends LoggingObject implements NetworkServi
     }
     
     return servers;
-  }
-
-  @Override
-  public List<Server> getShortestRoute(Server from, Server to)
-  {
-    // TODO use networkRouter class here.
-    return null;
   }
 }
