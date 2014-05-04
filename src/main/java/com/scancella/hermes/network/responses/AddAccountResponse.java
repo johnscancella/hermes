@@ -1,4 +1,6 @@
-package com.scancella.hermes.network.domain;
+package com.scancella.hermes.network.responses;
+
+import com.scancella.hermes.network.domain.Account;
 
 public class AddAccountResponse
 {

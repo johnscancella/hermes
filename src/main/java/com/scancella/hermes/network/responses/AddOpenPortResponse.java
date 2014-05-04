@@ -1,4 +1,4 @@
-package com.scancella.hermes.network.domain;
+package com.scancella.hermes.network.responses;
 
 public class AddOpenPortResponse
 {

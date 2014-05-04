@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.scancella.hermes.core.LoggingObject;
 import com.scancella.hermes.mappers.JsonMapper;
 import com.scancella.hermes.network.domain.Account;
-import com.scancella.hermes.network.domain.AddAccountResponse;
-import com.scancella.hermes.network.domain.AddOpenPortResponse;
 import com.scancella.hermes.network.domain.Server;
 import com.scancella.hermes.network.domain.ServerMetadata;
+import com.scancella.hermes.network.responses.AddAccountResponse;
+import com.scancella.hermes.network.responses.AddOpenPortResponse;
 
 /**
  * Provides a rest interface for querying about the network for this server.
