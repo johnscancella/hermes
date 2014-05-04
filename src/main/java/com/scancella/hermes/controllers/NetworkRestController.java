@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.scancella.hermes.core.LoggingObject;
 import com.scancella.hermes.mappers.JsonMapper;
 import com.scancella.hermes.network.domain.Account;
+import com.scancella.hermes.network.domain.RestService;
 import com.scancella.hermes.network.domain.Server;
 import com.scancella.hermes.network.domain.ServerMetadata;
 import com.scancella.hermes.network.responses.AddAccountResponse;
@@ -128,6 +129,22 @@ public class NetworkRestController extends LoggingObject
       metaData.getOpenPorts().add(port);
       serverMetadata.put(adjacentServer, metaData);
     }
+  }
+  
+  @RequestMapping("/services")
+  public String getRestServices() 
+  {
+    StringBuilder sb = new StringBuilder();
+    
+    RestService[] services = RestService.values();
+    sb.append(services[0].getName());
+    
+    for(int index=1; index < services.length; index++)
+    {
+      sb.append(",").append(services[index].getName());
+    }
+    
+    return sb.toString();
   }
 
   public JsonMapper<Server> getJsonServerMapper()

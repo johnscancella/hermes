@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.scancella.hermes.mappers.JsonMapper;
-import com.scancella.hermes.network.domain.RestServices;
+import com.scancella.hermes.network.domain.RestService;
 import com.scancella.hermes.network.domain.Server;
 
 @Component
@@ -62,7 +62,7 @@ public class AdjacentServerHandler
     StringBuilder sb = new StringBuilder();
     
     sb.append("http://").append(server.getIpVersion4()).append(":").append(PORT);
-    sb.append("/").append(RestServices.GET_ADJACENT_SERVERS.getService());
+    sb.append("/").append(RestService.GET_ADJACENT_SERVERS.getService());
     
     return sb.toString();
   }

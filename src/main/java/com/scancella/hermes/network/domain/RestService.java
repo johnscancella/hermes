@@ -1,6 +1,6 @@
 package com.scancella.hermes.network.domain;
 
-public enum RestServices
+public enum RestService
 {
   GET_ADJACENT_SERVERS("getAdjacentServers", "getAdjacentServers.do"),
   ADD_ADJACENT_SERVER("addAdjacentServer", "addAdjacentServer.do"),
@@ -10,7 +10,7 @@ public enum RestServices
   private final String name;
   private final String service;
   
-  private RestServices(String name, String service)
+  private RestService(String name, String service)
   {
     this.name = name;
     this.service = service;
