@@ -1,7 +1,5 @@
 package com.scancella.hermes.network.domain;
 
-import java.util.List;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -9,7 +7,6 @@ public class Server
 {
   private String name;
   private String ipVersion4;
-  private List<String> openPorts;
 
   public Server()
   {
@@ -76,15 +73,5 @@ public class Server
   public void setIpVersion4(String ipVersion4)
   {
     this.ipVersion4 = ipVersion4;
-  }
-
-  public List<String> getOpenPorts()
-  {
-    return openPorts;
-  }
-
-  public void setOpenPorts(List<String> openPorts)
-  {
-    this.openPorts = openPorts;
   }
 }

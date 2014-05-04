@@ -11,5 +11,8 @@ public interface NetworkService
    */
   public List<Server> getAdjacentServers(Server node) throws Exception;
   
+  /**
+   * Returns the shortest route from one server to another.
+   */
   public List<Server> getShortestRoute(Server from, Server to);
 }
