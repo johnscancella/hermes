@@ -94,7 +94,7 @@ public class NetworkRestController extends LoggingObject
   }
   
   //TODO change to ensure multiple users can add open ports at the same time
-  @RequestMapping("/addServerAccount.do")
+  @RequestMapping("/addServerPort.do")
   public AddOpenPortResponse addOpenPort(@RequestParam(value="servername", required=true) String serverName, 
       @RequestParam(value="port", required=true) int port) 
   {
