@@ -1,5 +1,8 @@
 package com.scancella.hermes.network.domain;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 /**
  * Account to use when connecting to a server
  */
@@ -15,6 +18,42 @@ public class Account
   {
     this.username = username;
     this.password = password;
+  }
+  
+  @Override
+  public boolean equals(Object obj)
+  {
+    if(!(obj instanceof Account))
+      return false;
+    
+    Account that = (Account)obj;
+    EqualsBuilder eb = new EqualsBuilder();
+    
+    eb.append(this.username, that.getUsername());
+    eb.append(this.password, that.getPassword());
+    
+    return eb.isEquals();
+  }
+  
+  @Override
+  public int hashCode()
+  {
+    HashCodeBuilder hcb = new HashCodeBuilder();
+    
+    hcb.append(username).append(password);
+    
+    return hcb.toHashCode();
+  }
+  
+  @Override
+  public String toString()
+  {
+    StringBuilder sb = new StringBuilder();
+
+    sb.append("[").append(this.username).append(":");
+    sb.append(this.password).append("]");
+
+    return sb.toString();
   }
 
   public String getUsername()

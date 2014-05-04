@@ -1,5 +1,6 @@
 package com.scancella.hermes.mappers;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ public class JsonServerMapper implements JsonMapper<Server>
   }
 
   @Override
-  public String toJson(List<Server> objects)
+  public String toJson(Collection<Server> objects)
   {
     // TODO Auto-generated method stub
     return null;
