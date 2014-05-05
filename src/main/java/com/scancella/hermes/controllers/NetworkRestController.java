@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.scancella.hermes.core.LoggingObject;
+import com.scancella.hermes.core.StoreableConfiguration;
 import com.scancella.hermes.mappers.JsonMapper;
 import com.scancella.hermes.network.domain.Account;
 import com.scancella.hermes.network.domain.RestService;
@@ -23,7 +24,7 @@ import com.scancella.hermes.network.responses.AddOpenPortResponse;
  * Provides a rest interface for querying about the network for this server.
  */
 @RestController
-public class NetworkRestController extends LoggingObject
+public class NetworkRestController extends LoggingObject implements StoreableConfiguration
 {
   private Map<String, Server> adjacentServers;
   private Map<Server, ServerMetadata> serverMetadata;
@@ -36,6 +37,19 @@ public class NetworkRestController extends LoggingObject
   {
     adjacentServers = new HashMap<>();
     serverMetadata = new HashMap<>();
+    restoreConfiguration();
+  }
+  
+  @Override
+  public void saveToConfiguration()
+  {
+    logger.error("Called save configuration!");
+  }
+
+  @Override
+  public void restoreConfiguration()
+  {
+    logger.error("Called restore configuration!");
   }
   
   @RequestMapping("getAdjacentServers.do")
@@ -157,6 +171,5 @@ public class NetworkRestController extends LoggingObject
   public void setAdjacentServers(Map<String, Server> adjacentServers)
   {
     this.adjacentServers = adjacentServers;
-  }
-  
+  }  
 }
