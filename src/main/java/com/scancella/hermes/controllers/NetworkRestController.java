@@ -44,7 +44,6 @@ public class NetworkRestController extends LoggingObject
     return jsonServerMapper.toJson(adjacentServers.values());
   }
   
-  //TODO change to ensure multiple users can add adjacent servers at the same time
   @RequestMapping("/addAdjacentServer.do")
   public boolean addAdjacentServer(@RequestParam(value="name", required=true) String serverName, @RequestParam(value="ip", required=true) String ipAddress) 
   {    
@@ -55,7 +54,6 @@ public class NetworkRestController extends LoggingObject
     return true;
   }
   
-  //TODO change to ensure multiple users can add accounts at the same time
   @RequestMapping("/addServerAccount.do")
   public AddAccountResponse addServerAccount(@RequestParam(value="servername", required=true) String serverName, 
       @RequestParam(value="accountname", required=true) String accountName,
@@ -80,7 +78,7 @@ public class NetworkRestController extends LoggingObject
     return AddAccountResponse.createDoesNotExistFailure(account, serverName);
   }
   
-  protected void addAccount(Server adjacentServer, Account account)
+  protected synchronized void addAccount(Server adjacentServer, Account account)
   {
     if(serverMetadata.containsKey(adjacentServer))
     {
@@ -94,7 +92,6 @@ public class NetworkRestController extends LoggingObject
     }
   }
   
-  //TODO change to ensure multiple users can add open ports at the same time
   @RequestMapping("/addServerPort.do")
   public AddOpenPortResponse addOpenPort(@RequestParam(value="servername", required=true) String serverName, 
       @RequestParam(value="port", required=true) int port) 
@@ -117,7 +114,7 @@ public class NetworkRestController extends LoggingObject
     return AddOpenPortResponse.createDoesNotExistFailure(port, serverName);
   }
   
-  protected void addPort(Server adjacentServer, int port)
+  protected synchronized void addPort(Server adjacentServer, int port)
   {
     if(serverMetadata.containsKey(adjacentServer))
     {
