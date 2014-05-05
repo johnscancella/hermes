@@ -63,7 +63,7 @@ public class NetworkRestController extends LoggingObject
     return addAccountToServer(serverName, account);
   }
   
-  protected AddAccountResponse addAccountToServer(String serverName, Account account)
+  protected synchronized AddAccountResponse addAccountToServer(String serverName, Account account)
   {
     if(adjacentServers.containsKey(serverName))
     {
@@ -78,7 +78,7 @@ public class NetworkRestController extends LoggingObject
     return AddAccountResponse.createDoesNotExistFailure(account, serverName);
   }
   
-  protected synchronized void addAccount(Server adjacentServer, Account account)
+  protected void addAccount(Server adjacentServer, Account account)
   {
     if(serverMetadata.containsKey(adjacentServer))
     {
@@ -99,7 +99,7 @@ public class NetworkRestController extends LoggingObject
     return addOpenPortToServer(serverName, port);
   }
   
-  protected AddOpenPortResponse addOpenPortToServer(String serverName, int port)
+  protected synchronized AddOpenPortResponse addOpenPortToServer(String serverName, int port)
   {
     if(adjacentServers.containsKey(serverName))
     {
@@ -114,7 +114,7 @@ public class NetworkRestController extends LoggingObject
     return AddOpenPortResponse.createDoesNotExistFailure(port, serverName);
   }
   
-  protected synchronized void addPort(Server adjacentServer, int port)
+  protected void addPort(Server adjacentServer, int port)
   {
     if(serverMetadata.containsKey(adjacentServer))
     {
