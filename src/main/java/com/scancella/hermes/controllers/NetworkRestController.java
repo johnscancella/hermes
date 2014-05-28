@@ -5,8 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.PathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +21,7 @@ import com.scancella.hermes.mappers.JsonMapper;
 import com.scancella.hermes.network.domain.Account;
 import com.scancella.hermes.network.domain.RestService;
 import com.scancella.hermes.network.domain.Server;
+import com.scancella.hermes.network.domain.Servers;
 import com.scancella.hermes.network.responses.AddAccountResponse;
 import com.scancella.hermes.network.responses.AddOpenPortResponse;
 
@@ -31,6 +36,8 @@ public class NetworkRestController extends LoggingObject implements StoreableCon
   @Autowired
   private JsonMapper<Server> jsonServerMapper;
   
+  private static final Resource serverConfigResource = new PathResource("servers.xml");
+  
   @PostConstruct
   public void init()
   {
@@ -39,18 +46,43 @@ public class NetworkRestController extends LoggingObject implements StoreableCon
   }
   
   @Override
-  public void saveToConfiguration()
+  public boolean saveToConfiguration()
   {
-    logger.error("Called save configuration!");
+    logger.debug("Called save configuration!");
+    
+    try
+    {
+      JAXBContext jaxbContext = JAXBContext.newInstance(Servers.class);
+      Marshaller marshaller = jaxbContext.createMarshaller();
+   
+      // output pretty printed
+      marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+      
+      marshaller.marshal(new Servers(adjacentServers.values()), serverConfigResource.getFile());      
+      return true;
+    }
+    catch(Exception e)
+    {
+      logger.error("Error marshalling servers list", e);
+      return false;
+    }
   }
 
   @Override
-  public void restoreConfiguration()
+  public boolean restoreConfiguration()
   {
-    logger.error("Called restore configuration!");
+    logger.debug("Called restore configuration!");
+    //TODO
+    return true;
   }
   
-  @RequestMapping("getAdjacentServers.do")
+  @Override
+  public Resource getConfigurationResource()
+  {
+    return serverConfigResource;
+  }
+  
+  @RequestMapping("/getAdjacentServers.do")
   public String getAdjacentServers() 
   {    
     return jsonServerMapper.toJson(adjacentServers.values());
@@ -165,5 +197,10 @@ public class NetworkRestController extends LoggingObject implements StoreableCon
   public void setAdjacentServers(Map<String, Server> adjacentServers)
   {
     this.adjacentServers = adjacentServers;
-  }  
+  }
+  
+  public Map<String, Server> getAdjacentServersMap()
+  {
+    return adjacentServers;
+  }
 }

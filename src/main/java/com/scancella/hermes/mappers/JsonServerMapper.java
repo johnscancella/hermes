@@ -5,15 +5,17 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.scancella.hermes.core.LoggingObject;
 import com.scancella.hermes.network.domain.Server;
 
 @Component
-public class JsonServerMapper implements JsonMapper<Server>
+public class JsonServerMapper extends LoggingObject implements JsonMapper<Server>
 {
   @Override
   public String toJson(Server object)
   {
     // TODO Auto-generated method stub
+    logger.error("toJson(Server object) not yet implemented!");
     return null;
   }
 
@@ -21,13 +23,15 @@ public class JsonServerMapper implements JsonMapper<Server>
   public String toJson(Collection<Server> objects)
   {
     // TODO Auto-generated method stub
-    return null;
+    logger.error("toJson(Collection<Server> objects) not yet implemented!");
+    return objects.toString();
   }
 
   @Override
   public boolean canParseIntoSingleObject(String json)
   {
     // TODO Auto-generated method stub
+    logger.error("canParseIntoSingleObject(String json) not yet implemented!");
     return false;
   }
 
@@ -35,6 +39,7 @@ public class JsonServerMapper implements JsonMapper<Server>
   public boolean canParseIntoListOfObjects(String json)
   {
     // TODO Auto-generated method stub
+    logger.error("canParseIntoListOfObjects(String json) not yet implemented!");
     return false;
   }
 
@@ -42,6 +47,7 @@ public class JsonServerMapper implements JsonMapper<Server>
   public Server fromJson(String json)
   {
     // TODO Auto-generated method stub
+    logger.error("fromJson(String json) not yet implemented!");
     return null;
   }
 
@@ -49,6 +55,7 @@ public class JsonServerMapper implements JsonMapper<Server>
   public List<Server> fromJsonToList(String json)
   {
     // TODO Auto-generated method stub
+    logger.error("fromJsonToList(String json) not yet implemented!");
     return null;
   }
 }

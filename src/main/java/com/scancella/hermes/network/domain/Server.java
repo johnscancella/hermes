@@ -2,9 +2,15 @@ package com.scancella.hermes.network.domain;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+@XmlRootElement(name="server")
+@XmlAccessorType (XmlAccessType.FIELD)
 public class Server
 {
   private String name;
