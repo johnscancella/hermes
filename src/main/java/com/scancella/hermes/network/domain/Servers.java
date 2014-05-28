@@ -9,6 +9,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Used for the sole purpose to allow JaxB to marshall a list of servers... so stupid
+ */
 @XmlRootElement(name="servers")
 @XmlAccessorType (XmlAccessType.FIELD)
 public class Servers
