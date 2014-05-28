@@ -1,5 +1,6 @@
 package com.scancella.hermes.controllers;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +17,6 @@ import com.scancella.hermes.mappers.JsonMapper;
 import com.scancella.hermes.network.domain.Account;
 import com.scancella.hermes.network.domain.RestService;
 import com.scancella.hermes.network.domain.Server;
-import com.scancella.hermes.network.domain.ServerMetadata;
 import com.scancella.hermes.network.responses.AddAccountResponse;
 import com.scancella.hermes.network.responses.AddOpenPortResponse;
 
@@ -27,7 +27,6 @@ import com.scancella.hermes.network.responses.AddOpenPortResponse;
 public class NetworkRestController extends LoggingObject implements StoreableConfiguration
 {
   private Map<String, Server> adjacentServers;
-  private Map<Server, ServerMetadata> serverMetadata;
   
   @Autowired
   private JsonMapper<Server> jsonServerMapper;
@@ -36,7 +35,6 @@ public class NetworkRestController extends LoggingObject implements StoreableCon
   public void init()
   {
     adjacentServers = new HashMap<>();
-    serverMetadata = new HashMap<>();
     restoreConfiguration();
   }
   
@@ -94,15 +92,13 @@ public class NetworkRestController extends LoggingObject implements StoreableCon
   
   protected void addAccount(Server adjacentServer, Account account)
   {
-    if(serverMetadata.containsKey(adjacentServer))
+    if(adjacentServer.getAccounts() != null)
     {
-      serverMetadata.get(adjacentServer).getAccounts().add(account);
+      adjacentServer.getAccounts().add(account);
     }
     else
     {
-      ServerMetadata metaData = new ServerMetadata();
-      metaData.getAccounts().add(account);
-      serverMetadata.put(adjacentServer, metaData);
+      adjacentServer.setAccounts(Arrays.asList(account));
     }
   }
   
@@ -130,15 +126,13 @@ public class NetworkRestController extends LoggingObject implements StoreableCon
   
   protected void addPort(Server adjacentServer, int port)
   {
-    if(serverMetadata.containsKey(adjacentServer))
+    if(adjacentServer.getOpenPorts() != null)
     {
-      serverMetadata.get(adjacentServer).getOpenPorts().add(port);
+      adjacentServer.getOpenPorts().add(port);
     }
     else
     {
-      ServerMetadata metaData = new ServerMetadata();
-      metaData.getOpenPorts().add(port);
-      serverMetadata.put(adjacentServer, metaData);
+      adjacentServer.setOpenPorts(Arrays.asList(port));
     }
   }
   
