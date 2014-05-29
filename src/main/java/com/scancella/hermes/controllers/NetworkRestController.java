@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.PathResource;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.scancella.hermes.core.ConfigurationStatus;
 import com.scancella.hermes.core.LoggingObject;
 import com.scancella.hermes.core.StoreableConfiguration;
 import com.scancella.hermes.mappers.JsonMapper;
@@ -46,9 +48,10 @@ public class NetworkRestController extends LoggingObject implements StoreableCon
   }
   
   @Override
-  public boolean saveToConfiguration()
+  public ConfigurationStatus saveToConfiguration()
   {
     logger.debug("Called save configuration!");
+    ConfigurationStatus status = new ConfigurationStatus();
     
     try
     {
@@ -59,21 +62,48 @@ public class NetworkRestController extends LoggingObject implements StoreableCon
       marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
       
       marshaller.marshal(new Servers(adjacentServers.values()), serverConfigResource.getFile());      
-      return true;
+      status.setStatusOk(true);
+      status.setStatusMessage("Successfully saved Servers to " + serverConfigResource.getFilename());
     }
     catch(Exception e)
     {
       logger.error("Error marshalling servers list", e);
-      return false;
+      status.setStatusOk(false);
+      status.setStatusMessage("Failed to save Servers to " + serverConfigResource.getFilename());
     }
+    
+    return status;
   }
 
   @Override
-  public boolean restoreConfiguration()
+  public ConfigurationStatus restoreConfiguration()
   {
     logger.debug("Called restore configuration!");
-    //TODO
-    return true;
+    ConfigurationStatus status = new ConfigurationStatus();
+    
+    try
+    {
+      JAXBContext jaxbContext = JAXBContext.newInstance(Servers.class);
+      Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+      
+      Servers servers = (Servers)unmarshaller.unmarshal(serverConfigResource.getFile());
+      
+      for(Server server : servers.getServers())
+      {
+        adjacentServers.put(server.getName(), server);
+      }
+      
+      status.setStatusOk(true);
+      status.setStatusMessage("Successfully restored Servers from " + serverConfigResource.getFilename());
+    }
+    catch(Exception e)
+    {
+      logger.error("Error unmarshalling servers list", e);
+      status.setStatusOk(false);
+      status.setStatusMessage("Failed to restore Servers from " + serverConfigResource.getFilename());
+    }
+    
+    return status;
   }
   
   @Override

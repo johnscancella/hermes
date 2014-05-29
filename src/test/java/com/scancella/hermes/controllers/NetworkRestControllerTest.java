@@ -23,4 +23,14 @@ public class NetworkRestControllerTest extends SimpleTest
     
     sut.saveToConfiguration();
   }
+  
+  @Test
+  public void foo()
+  {
+    boolean isTrue = true;
+    boolean isFalse = false;
+    
+    System.err.println("AND: " + (isTrue && isFalse && isTrue && isTrue));
+    System.err.println("OR: " + (isTrue || isFalse));
+  }
 }

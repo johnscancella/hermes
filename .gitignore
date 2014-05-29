@@ -6,3 +6,4 @@ build
 .settings
 *.swp
 *~
+servers.xml
