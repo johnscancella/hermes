@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -15,7 +16,9 @@ public class Server
 {
   private String name;
   private String ipVersion4;
-  private List<Integer> openPorts;
+  @XmlElement(name = "port")
+  private Integer fileTransferPort;
+  @XmlElement(name = "account")
   private List<Account> accounts;
 
   public Server(){}
@@ -26,11 +29,11 @@ public class Server
     this.ipVersion4 = ipVersion4;
   }
   
-  public Server(String serverName, String ipVersion4, List<Integer> openPorts, List<Account> accounts)
+  public Server(String serverName, String ipVersion4, Integer fileTransferPort, List<Account> accounts)
   {
     this.name = serverName;
     this.ipVersion4 = ipVersion4;
-    this.openPorts = openPorts;
+    this.fileTransferPort = fileTransferPort;
     this.accounts = accounts;
   }
 
@@ -91,14 +94,14 @@ public class Server
     this.ipVersion4 = ipVersion4;
   }
   
-  public List<Integer> getOpenPorts()
+  public Integer getFileTransferPort()
   {
-    return openPorts;
+    return fileTransferPort;
   }
 
-  public void setOpenPorts(List<Integer> openPorts)
+  public void setFileTransferPort(Integer fileTransferPort)
   {
-    this.openPorts = openPorts;
+    this.fileTransferPort = fileTransferPort;
   }
 
   public List<Account> getAccounts()

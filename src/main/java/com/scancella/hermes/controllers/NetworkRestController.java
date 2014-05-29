@@ -1,7 +1,8 @@
 package com.scancella.hermes.controllers;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -21,11 +22,10 @@ import com.scancella.hermes.core.LoggingObject;
 import com.scancella.hermes.core.StoreableConfiguration;
 import com.scancella.hermes.mappers.JsonMapper;
 import com.scancella.hermes.network.domain.Account;
-import com.scancella.hermes.network.domain.RestService;
 import com.scancella.hermes.network.domain.Server;
 import com.scancella.hermes.network.domain.Servers;
 import com.scancella.hermes.network.responses.AddAccountResponse;
-import com.scancella.hermes.network.responses.AddOpenPortResponse;
+import com.scancella.hermes.network.responses.setFileTransferPortResponse;
 
 /**
  * Provides a rest interface for querying about the network for this server.
@@ -118,6 +118,7 @@ public class NetworkRestController extends LoggingObject implements StoreableCon
     return jsonServerMapper.toJson(adjacentServers.values());
   }
   
+  //TODO split out server accounts from server object so I have no fear of returning servers
   @RequestMapping("/addAdjacentServer.do")
   public boolean addAdjacentServer(@RequestParam(value="name", required=true) String serverName, @RequestParam(value="ip", required=true) String ipAddress) 
   {    
@@ -160,58 +161,27 @@ public class NetworkRestController extends LoggingObject implements StoreableCon
     }
     else
     {
-      adjacentServer.setAccounts(Arrays.asList(account));
+      List<Account> accounts = new ArrayList<Account>(1);
+      accounts.add(account);
+      adjacentServer.setAccounts(accounts);
     }
   }
   
-  @RequestMapping("/addServerPort.do")
-  public AddOpenPortResponse addOpenPort(@RequestParam(value="servername", required=true) String serverName, 
+  @RequestMapping("/setServerPort.do")
+  public setFileTransferPortResponse setFileTransferPort(@RequestParam(value="servername", required=true) String serverName, 
       @RequestParam(value="port", required=true) int port) 
-  {
-    return addOpenPortToServer(serverName, port);
-  }
-  
-  protected synchronized AddOpenPortResponse addOpenPortToServer(String serverName, int port)
   {
     if(adjacentServers.containsKey(serverName))
     {
       Server adjacentServer = adjacentServers.get(serverName);
-      addPort(adjacentServer, port);
+      adjacentServer.setFileTransferPort(port);
       
       logger.debug("Added open port " + port + " to adjacent server " + serverName );
       
-      return AddOpenPortResponse.createDefaultSuccess(port, serverName);
+      return setFileTransferPortResponse.createDefaultSuccess(port, serverName);
     }
     
-    return AddOpenPortResponse.createDoesNotExistFailure(port, serverName);
-  }
-  
-  protected void addPort(Server adjacentServer, int port)
-  {
-    if(adjacentServer.getOpenPorts() != null)
-    {
-      adjacentServer.getOpenPorts().add(port);
-    }
-    else
-    {
-      adjacentServer.setOpenPorts(Arrays.asList(port));
-    }
-  }
-  
-  @RequestMapping("/services")
-  public String getRestServices() 
-  {
-    StringBuilder sb = new StringBuilder();
-    
-    RestService[] services = RestService.values();
-    sb.append(services[0].getName());
-    
-    for(int index=1; index < services.length; index++)
-    {
-      sb.append(",").append(services[index].getName());
-    }
-    
-    return sb.toString();
+    return setFileTransferPortResponse.createDoesNotExistFailure(port, serverName);
   }
 
   public JsonMapper<Server> getJsonServerMapper()

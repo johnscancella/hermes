@@ -1,27 +1,27 @@
 package com.scancella.hermes.network.responses;
 
-public class AddOpenPortResponse
+public class setFileTransferPortResponse
 {
   private final String message;
   private final boolean successfullyAddedAccount;
 
-  public AddOpenPortResponse(boolean successfullyAddedAccount, String reponseMessage)
+  public setFileTransferPortResponse(boolean successfullyAddedAccount, String reponseMessage)
   {
     this.message = reponseMessage;
     this.successfullyAddedAccount = successfullyAddedAccount;
   }
 
-  public static AddOpenPortResponse createDefaultSuccess(int port, String serverName)
+  public static setFileTransferPortResponse createDefaultSuccess(int port, String serverName)
   {
     StringBuilder sb = new StringBuilder();
 
     sb.append("Successfully added open Port ").append(port);
     sb.append(" to ").append(serverName);
 
-    return new AddOpenPortResponse(true, sb.toString());
+    return new setFileTransferPortResponse(true, sb.toString());
   }
   
-  public static AddOpenPortResponse createDoesNotExistFailure(int port, String serverName)
+  public static setFileTransferPortResponse createDoesNotExistFailure(int port, String serverName)
   {
     StringBuilder sb = new StringBuilder();
 
@@ -29,7 +29,7 @@ public class AddOpenPortResponse
     sb.append(" to ").append(serverName);
     sb.append(" because it does not exist");
 
-    return new AddOpenPortResponse(false, sb.toString());
+    return new setFileTransferPortResponse(false, sb.toString());
   }
 
   public String getMessage()

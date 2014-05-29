@@ -1,11 +1,14 @@
 package com.scancella.hermes.network.domain;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 /**
  * Account to use when connecting to a server
  */
+@XmlRootElement(name="account")
 public class Account
 {
   private String username;
