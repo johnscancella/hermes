@@ -1,8 +1,6 @@
 package com.scancella.hermes.controllers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -143,7 +141,7 @@ public class NetworkRestController extends LoggingObject implements StoreableCon
     if(adjacentServers.containsKey(serverName))
     {
       Server adjacentServer = adjacentServers.get(serverName);
-      addAccount(adjacentServer, account);      
+      adjacentServer.setAccount(account);
       
       logger.debug("Added account " + account + " to adjacent server " + serverName );
       
@@ -151,20 +149,6 @@ public class NetworkRestController extends LoggingObject implements StoreableCon
     }
     
     return AddAccountResponse.createDoesNotExistFailure(account, serverName);
-  }
-  
-  protected void addAccount(Server adjacentServer, Account account)
-  {
-    if(adjacentServer.getAccounts() != null)
-    {
-      adjacentServer.getAccounts().add(account);
-    }
-    else
-    {
-      List<Account> accounts = new ArrayList<Account>(1);
-      accounts.add(account);
-      adjacentServer.setAccounts(accounts);
-    }
   }
   
   @RequestMapping("/setServerPort.do")

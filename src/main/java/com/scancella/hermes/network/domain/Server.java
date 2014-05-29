@@ -1,7 +1,5 @@
 package com.scancella.hermes.network.domain;
 
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -19,7 +17,7 @@ public class Server
   @XmlElement(name = "port")
   private Integer fileTransferPort;
   @XmlElement(name = "account")
-  private List<Account> accounts;
+  private Account account;
 
   public Server(){}
 
@@ -29,12 +27,12 @@ public class Server
     this.ipVersion4 = ipVersion4;
   }
   
-  public Server(String serverName, String ipVersion4, Integer fileTransferPort, List<Account> accounts)
+  public Server(String serverName, String ipVersion4, Integer fileTransferPort, Account account)
   {
     this.name = serverName;
     this.ipVersion4 = ipVersion4;
     this.fileTransferPort = fileTransferPort;
-    this.accounts = accounts;
+    this.account = account;
   }
 
   @Override
@@ -104,13 +102,13 @@ public class Server
     this.fileTransferPort = fileTransferPort;
   }
 
-  public List<Account> getAccounts()
+  public Account getAccount()
   {
-    return accounts;
+    return account;
   }
 
-  public void setAccounts(List<Account> accounts)
+  public void setAccount(Account account)
   {
-    this.accounts = accounts;
+    this.account = account;
   }
 }
