@@ -5,7 +5,7 @@ public enum RestService
   GET_ADJACENT_SERVERS("getAdjacentServers", "getAdjacentServers.do"),
   ADD_ADJACENT_SERVER("addAdjacentServer", "addAdjacentServer.do"),
   ADD_SERVER_ACCOUNT("addServerAccount", "addServerAccount.do"),
-  ADD_SERVER_PORT("addServerPort","addServerPort.do");
+  SET_SERVER_PORT("setServerPort","setServerPort.do");
   
   private final String name;
   private final String service;
