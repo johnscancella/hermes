@@ -1,34 +1,27 @@
 package com.scancella.hermes.network.services;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.scancella.hermes.mappers.JsonMapper;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scancella.hermes.network.domain.RestService;
 import com.scancella.hermes.network.domain.Server;
 
 @Component
 public class AdjacentServerHandler
-{
-  //TODO make this configurable
-  private static final int PORT = 8080;
-  
-  @Autowired
-  private JsonMapper<Server> jsonServerMapper;
-  
-  public List<Server> getAdjacentServers(Server server) throws ClientProtocolException, IOException
+{ 
+  public Collection<Server> getAdjacentServers(Server server) throws ClientProtocolException, IOException
   {
     InputStream stream = sendRequestForAdjacentServers(server);
     return parseServers(stream);
@@ -61,7 +54,7 @@ public class AdjacentServerHandler
   {
     StringBuilder sb = new StringBuilder();
     
-    sb.append("http://").append(server.getIpVersion4()).append(":").append(PORT);
+    sb.append("http://").append(server.getIpVersion4()).append(":").append(server.getFileTransferPort());
     sb.append("/").append(RestService.GET_ADJACENT_SERVERS.getService());
     
     return sb.toString();
@@ -77,27 +70,10 @@ public class AdjacentServerHandler
     return true;
   }
   
-  public List<Server> parseServers(InputStream responseContent) throws IOException
+  protected Collection<Server> parseServers(InputStream responseContent) throws IOException, JsonParseException, JsonMappingException
   {
-    List<Server> servers = new ArrayList<>();
-    
-    BufferedReader br = new BufferedReader(new InputStreamReader(responseContent));
-    String output;
-    while((output = br.readLine()) != null)
-    {
-      if(jsonServerMapper.canParseIntoListOfObjects(output))
-      {
-        servers.addAll(jsonServerMapper.fromJsonToList(output));
-      }
-      else if(jsonServerMapper.canParseIntoSingleObject(output))
-      {
-        servers.add(jsonServerMapper.fromJson(output));
-      }
-      else
-      {
-        throw new RuntimeException("Could not map to Server object from json output: " + output, null);
-      }
-    }
+    ObjectMapper mapper = new ObjectMapper();
+    Collection<Server> servers = mapper.readValue(responseContent, new TypeReference<Collection<Server>>(){});
     
     return servers;
   }

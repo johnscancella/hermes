@@ -1,27 +1,25 @@
 package com.scancella.hermes.controllers;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.PathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scancella.hermes.core.ConfigurationStatus;
 import com.scancella.hermes.core.LoggingObject;
 import com.scancella.hermes.core.StoreableConfiguration;
-import com.scancella.hermes.mappers.JsonMapper;
 import com.scancella.hermes.network.domain.Account;
 import com.scancella.hermes.network.domain.Server;
-import com.scancella.hermes.network.domain.Servers;
 import com.scancella.hermes.network.responses.AddAccountResponse;
 import com.scancella.hermes.network.responses.setFileTransferPortResponse;
 
@@ -33,10 +31,7 @@ public class NetworkRestController extends LoggingObject implements StoreableCon
 {
   private Map<String, Server> adjacentServers;
   
-  @Autowired
-  private JsonMapper<Server> jsonServerMapper;
-  
-  private static final Resource serverConfigResource = new PathResource("servers.xml");
+  private static final Resource serverConfigResource = new PathResource("servers.json");
   
   @PostConstruct
   public void init()
@@ -53,13 +48,9 @@ public class NetworkRestController extends LoggingObject implements StoreableCon
     
     try
     {
-      JAXBContext jaxbContext = JAXBContext.newInstance(Servers.class);
-      Marshaller marshaller = jaxbContext.createMarshaller();
-   
-      // output pretty printed
-      marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+      ObjectMapper mapper = new ObjectMapper();
+      mapper.writerWithDefaultPrettyPrinter().writeValue(serverConfigResource.getFile(), adjacentServers.values());
       
-      marshaller.marshal(new Servers(adjacentServers.values()), serverConfigResource.getFile());      
       status.setStatusOk(true);
       status.setStatusMessage("Successfully saved Servers to " + serverConfigResource.getFilename());
     }
@@ -79,26 +70,32 @@ public class NetworkRestController extends LoggingObject implements StoreableCon
     logger.debug("Called restore configuration!");
     ConfigurationStatus status = new ConfigurationStatus();
     
-    try
+    if(serverConfigResource.exists())
     {
-      JAXBContext jaxbContext = JAXBContext.newInstance(Servers.class);
-      Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-      
-      Servers servers = (Servers)unmarshaller.unmarshal(serverConfigResource.getFile());
-      
-      for(Server server : servers.getServers())
+      try
       {
-        adjacentServers.put(server.getName(), server);
+        ObjectMapper mapper = new ObjectMapper();
+        Collection<Server> servers = mapper.readValue(serverConfigResource.getInputStream(), new TypeReference<Collection<Server>>(){});
+        
+        for(Server server : servers)
+        {
+          adjacentServers.put(server.getName(), server);
+        }
+        
+        status.setStatusOk(true);
+        status.setStatusMessage("Successfully restored Servers from " + serverConfigResource.getFilename());
       }
-      
-      status.setStatusOk(true);
-      status.setStatusMessage("Successfully restored Servers from " + serverConfigResource.getFilename());
+      catch(Exception e)
+      {
+        logger.error("Error unmarshalling servers list", e);
+        status.setStatusOk(false);
+        status.setStatusMessage("Failed to restore Servers from " + serverConfigResource.getFilename());
+      }
     }
-    catch(Exception e)
+    else
     {
-      logger.error("Error unmarshalling servers list", e);
-      status.setStatusOk(false);
-      status.setStatusMessage("Failed to restore Servers from " + serverConfigResource.getFilename());
+      status.setStatusMessage("No configuration to restore from");
+      status.setStatusOk(true);
     }
     
     return status;
@@ -111,9 +108,11 @@ public class NetworkRestController extends LoggingObject implements StoreableCon
   }
   
   @RequestMapping("/getAdjacentServers.do")
-  public String getAdjacentServers() 
+  public String getAdjacentServers() throws JsonProcessingException 
   {    
-    return jsonServerMapper.toJson(adjacentServers.values());
+    ObjectMapper mapper = new ObjectMapper();
+    
+    return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(adjacentServers.values());
   }
   
   //TODO split out server accounts from server object so I have no fear of returning servers
@@ -166,16 +165,6 @@ public class NetworkRestController extends LoggingObject implements StoreableCon
     }
     
     return setFileTransferPortResponse.createDoesNotExistFailure(port, serverName);
-  }
-
-  public JsonMapper<Server> getJsonServerMapper()
-  {
-    return jsonServerMapper;
-  }
-
-  public void setJsonServerMapper(JsonMapper<Server> jsonServerMapper)
-  {
-    this.jsonServerMapper = jsonServerMapper;
   }
 
   public void setAdjacentServers(Map<String, Server> adjacentServers)

@@ -1,6 +1,7 @@
 package com.scancella.hermes.network.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +46,7 @@ public class NetworkRouter extends LoggingObject
       {
         try
         {
-          List<Server> adjacentServers = adjacentServerHandler.getAdjacentServers(currentServer);
+          Collection<Server> adjacentServers = adjacentServerHandler.getAdjacentServers(currentServer);
           updateNetworkMapAndQueue(serverQueue, vertices, currentServer, adjacentServers);
         }
         catch(Exception e)
@@ -62,7 +63,7 @@ public class NetworkRouter extends LoggingObject
   }
 
   protected void updateNetworkMapAndQueue(PriorityQueue<Server> serverQueue, Map<Server, Vertex> vertices,
-      Server currentServer, List<Server> adjacentServers)
+      Server currentServer, Collection<Server> adjacentServers)
   {
     Vertex currentServerVertex = getVertexFromMap(currentServer, vertices);
     for(Server adjacentServer : adjacentServers)

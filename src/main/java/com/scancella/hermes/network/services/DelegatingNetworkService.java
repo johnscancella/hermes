@@ -1,6 +1,7 @@
 package com.scancella.hermes.network.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class DelegatingNetworkService extends LoggingObject implements NetworkSe
   private NetworkRouter networkRouter;
   
   @Override
-  public List<Server> getAdjacentServers(Server node) throws Exception
+  public Collection<Server> getAdjacentServers(Server node) throws Exception
   {
     return adjacentServerHandler.getAdjacentServers(node);
   }

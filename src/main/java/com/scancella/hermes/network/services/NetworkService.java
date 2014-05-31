@@ -1,5 +1,6 @@
 package com.scancella.hermes.network.services;
 
+import java.util.Collection;
 import java.util.List;
 
 import com.scancella.hermes.network.domain.Server;
@@ -9,7 +10,7 @@ public interface NetworkService
   /**
    * Provides a list of adjacent server nodes in the network to the specified server
    */
-  public List<Server> getAdjacentServers(Server node) throws Exception;
+  public Collection<Server> getAdjacentServers(Server node) throws Exception;
   
   /**
    * Returns the shortest route from one server to another.
