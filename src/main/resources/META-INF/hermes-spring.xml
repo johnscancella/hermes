@@ -5,15 +5,22 @@
        xmlns:int="http://www.springframework.org/schema/integration"
        xmlns:int-stream="http://www.springframework.org/schema/integration/stream"
        xmlns:beans="http://www.springframework.org/schema/beans"
+       xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
   http://www.springframework.org/schema/beans/spring-beans.xsd
   http://www.springframework.org/schema/integration
   http://www.springframework.org/schema/integration/spring-integration.xsd
   http://www.springframework.org/schema/integration/stream
-  http://www.springframework.org/schema/integration/stream/spring-integration-stream.xsd">
+  http://www.springframework.org/schema/integration/stream/spring-integration-stream.xsd
+  http://www.springframework.org/schema/task
+  http://www.springframework.org/schema/task/spring-task.xsd">
  
     <int:channel id="messageChannel"></int:channel>
 
 	<int-stream:stdout-channel-adapter channel="messageChannel" append-newline="true" />
+	
+	<task:scheduler id="scheduler" pool-size="10" />
+	
+	<beans:bean name="doNothingFileSender" class="com.scancella.hermes.network.services.DoNothingFileSender"/>
  
 </beans>

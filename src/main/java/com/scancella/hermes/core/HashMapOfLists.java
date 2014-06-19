@@ -1,6 +1,6 @@
 package com.scancella.hermes.core;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +19,9 @@ public class HashMapOfLists<K, V> implements MapOfLists<K, V>
     }
     else
     {
-      map.put(key, Arrays.asList(value));
+      List<V> values = new ArrayList<>();
+      values.add(value);
+      map.put(key, values);
     }
   }
 

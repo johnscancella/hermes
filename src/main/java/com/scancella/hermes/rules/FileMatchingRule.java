@@ -1,26 +1,25 @@
 package com.scancella.hermes.rules;
 
-import com.scancella.hermes.network.domain.Server;
 
 /**
  * Used to create a routing rule for any file received. Any file in the scan directory that matches the regex will be send to the specified server.
  */
 public class FileMatchingRule
 {
-  private final String fileMatchingRegex;
+  private final String regexExpression;
   private final String scanDirectory;
-  private final Server destinationServer;
+  private final String destinationServer;
   
-  public FileMatchingRule(String fileMatchingRegex, String scanDirectory, Server destinationServer)
+  public FileMatchingRule(String fileMatchingRegex, String scanDirectory, String destinationServer)
   {
-    this.fileMatchingRegex = fileMatchingRegex;
+    this.regexExpression = fileMatchingRegex;
     this.scanDirectory = scanDirectory;
     this.destinationServer = destinationServer;
   }
 
-  public String getFileMatchingRegex()
+  public String getRegexExpression()
   {
-    return fileMatchingRegex;
+    return regexExpression;
   }
 
   public String getScanDirectory()
@@ -28,7 +27,7 @@ public class FileMatchingRule
     return scanDirectory;
   }
 
-  public Server getDestinationServer()
+  public String getDestinationServer()
   {
     return destinationServer;
   }
