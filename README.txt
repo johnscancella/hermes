@@ -4,7 +4,7 @@ gradle cleanEclipse eclipse
 
 to build and run application run
 ===================================
-gradle build ; java -jar build/libs/Hermes.jar
+gradle clean bootRepackage && java -jar build/libs/Hermes.jar
 
 debug
 ===================================
