@@ -72,30 +72,39 @@ public class NetworkRestController extends LoggingObject implements StoreableCon
     
     if(serverConfigResource.exists())
     {
-      try
-      {
-        ObjectMapper mapper = new ObjectMapper();
-        Collection<Server> servers = mapper.readValue(serverConfigResource.getInputStream(), new TypeReference<Collection<Server>>(){});
-        
-        for(Server server : servers)
-        {
-          adjacentServers.put(server.getName(), server);
-        }
-        
-        status.setStatusOk(true);
-        status.setStatusMessage("Successfully restored Servers from " + serverConfigResource.getFilename());
-      }
-      catch(Exception e)
-      {
-        logger.error("Error unmarshalling servers list", e);
-        status.setStatusOk(false);
-        status.setStatusMessage("Failed to restore Servers from " + serverConfigResource.getFilename());
-      }
+      status = restoreConfigurationFromResource();
     }
     else
     {
       status.setStatusMessage("No configuration to restore from");
       status.setStatusOk(true);
+    }
+    
+    return status;
+  }
+  
+  protected ConfigurationStatus restoreConfigurationFromResource()
+  {
+    ConfigurationStatus status = new ConfigurationStatus();
+    
+    try
+    {
+      ObjectMapper mapper = new ObjectMapper();
+      Collection<Server> servers = mapper.readValue(serverConfigResource.getInputStream(), new TypeReference<Collection<Server>>(){});
+      
+      for(Server server : servers)
+      {
+        adjacentServers.put(server.getName(), server);
+      }
+      
+      status.setStatusOk(true);
+      status.setStatusMessage("Successfully restored Servers from " + serverConfigResource.getFilename());
+    }
+    catch(Exception e)
+    {
+      logger.error("Error unmarshalling servers list", e);
+      status.setStatusOk(false);
+      status.setStatusMessage("Failed to restore Servers from " + serverConfigResource.getFilename());
     }
     
     return status;

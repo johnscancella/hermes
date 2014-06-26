@@ -47,4 +47,14 @@ public class SendMatchingFilesJob extends LoggingObject implements Runnable
     }
   }
 
+  public FileMatchingRule getRule()
+  {
+    return rule;
+  }
+
+  public FileSender getSender()
+  {
+    return sender;
+  }
+
 }
