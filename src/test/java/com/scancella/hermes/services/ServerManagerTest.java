@@ -1,4 +1,4 @@
-package com.scancella.hermes.controllers;
+package com.scancella.hermes.services;
 
 import java.io.IOException;
 
@@ -9,14 +9,14 @@ import org.junit.Test;
 import com.scancella.hermes.SimpleTest;
 import com.scancella.hermes.network.domain.Server;
 
-public class NetworkRestControllerTest extends SimpleTest
+public class ServerManagerTest extends SimpleTest
 {
-  private NetworkRestController sut;
+  private ServerManager sut;
   
   @Before
   public void setup()
   {
-    sut = new NetworkRestController();
+    sut = new ServerManager();
     sut.init();
   }
   
@@ -52,7 +52,7 @@ public class NetworkRestControllerTest extends SimpleTest
   {
     saveServers();
     
-    sut = new NetworkRestController();
+    sut = new ServerManager();
     sut.init();
     assertEquals(2, sut.getAdjacentServersMap().size());
   }
