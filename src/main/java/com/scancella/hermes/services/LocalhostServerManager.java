@@ -22,11 +22,11 @@ import com.scancella.hermes.network.responses.AddAccountResponse;
 import com.scancella.hermes.network.responses.setFileTransferPortResponse;
 
 /**
- * manages the list of servers that this server has access to, and the meta-data associated with those servers.
+ * manages the list of servers that this(localhost) server has access to, and the meta-data associated with those servers.
  * TODO split out server accounts from server object so I have no fear of returning servers
  */
 @Component
-public class ServerManager extends LoggingObject implements StoreableConfiguration
+public class LocalhostServerManager extends LoggingObject implements StoreableConfiguration
 {
   private Map<String, Server> adjacentServers;
   private static final Resource serverConfigResource = new PathResource("servers.json");

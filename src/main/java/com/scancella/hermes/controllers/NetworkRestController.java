@@ -12,7 +12,7 @@ import com.scancella.hermes.network.domain.Account;
 import com.scancella.hermes.network.domain.Server;
 import com.scancella.hermes.network.responses.AddAccountResponse;
 import com.scancella.hermes.network.responses.setFileTransferPortResponse;
-import com.scancella.hermes.services.ServerManager;
+import com.scancella.hermes.services.LocalhostServerManager;
 
 /**
  * Provides a rest interface for querying about the network for this server, and managing that network.
@@ -21,7 +21,7 @@ import com.scancella.hermes.services.ServerManager;
 public class NetworkRestController extends LoggingObject
 {  
   @Autowired
-  private ServerManager serverManager;
+  private LocalhostServerManager serverManager;
   
   @RequestMapping("/getAdjacentServers.do")
   public String getAdjacentServers() throws JsonProcessingException 

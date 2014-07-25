@@ -13,7 +13,7 @@ import com.scancella.hermes.network.domain.Server;
 public class DelegatingNetworkService extends LoggingObject implements NetworkService
 {  
   @Autowired
-  private AdjacentServerHandler adjacentServerHandler;
+  private NetworkServerHandler adjacentServerHandler;
   
   @Autowired
   private NetworkRouter networkRouter;
@@ -21,7 +21,7 @@ public class DelegatingNetworkService extends LoggingObject implements NetworkSe
   @Override
   public Collection<Server> getAdjacentServers(Server node) throws Exception
   {
-    return adjacentServerHandler.getAdjacentServers(node);
+    return adjacentServerHandler.getAdjacentServersFromServer(node);
   }
 
   @Override

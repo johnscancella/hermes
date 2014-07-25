@@ -18,10 +18,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scancella.hermes.network.domain.RestService;
 import com.scancella.hermes.network.domain.Server;
 
+/**
+ * Uses restful interface to retrieve a list of all adjacent servers
+ */
 @Component
-public class AdjacentServerHandler
+public class NetworkServerHandler
 { 
-  public Collection<Server> getAdjacentServers(Server server) throws ClientProtocolException, IOException
+  public Collection<Server> getAdjacentServersFromServer(Server server) throws ClientProtocolException, IOException
   {
     InputStream stream = sendRequestForAdjacentServers(server);
     return parseServers(stream);

@@ -24,7 +24,7 @@ import com.scancella.hermes.network.domain.Vertex;
 public class NetworkRouter extends LoggingObject
 {
   @Autowired
-  private AdjacentServerHandler adjacentServerHandler;
+  private NetworkServerHandler networkServerHandler;
 
   public List<Server> computeShortestPath(Server source, Server to) throws NetworkPathNotFound
   {
@@ -46,7 +46,7 @@ public class NetworkRouter extends LoggingObject
       {
         try
         {
-          Collection<Server> adjacentServers = adjacentServerHandler.getAdjacentServers(currentServer);
+          Collection<Server> adjacentServers = networkServerHandler.getAdjacentServersFromServer(currentServer);
           updateNetworkMapAndQueue(serverQueue, vertices, currentServer, adjacentServers);
         }
         catch(Exception e)
@@ -160,13 +160,13 @@ public class NetworkRouter extends LoggingObject
     return new NetworkPathNotFound(sb.toString());
   }
 
-  public AdjacentServerHandler getAdjacentServerHandler()
+  public NetworkServerHandler getNetworkServerHandler()
   {
-    return adjacentServerHandler;
+    return networkServerHandler;
   }
 
-  public void setAdjacentServerHandler(AdjacentServerHandler adjacentServerHandler)
+  public void setNetworkServerHandler(NetworkServerHandler adjacentServerHandler)
   {
-    this.adjacentServerHandler = adjacentServerHandler;
+    this.networkServerHandler = adjacentServerHandler;
   }
 }

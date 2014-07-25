@@ -11,12 +11,12 @@ import com.scancella.hermes.network.domain.Server;
 
 public class ServerManagerTest extends SimpleTest
 {
-  private ServerManager sut;
+  private LocalhostServerManager sut;
   
   @Before
   public void setup()
   {
-    sut = new ServerManager();
+    sut = new LocalhostServerManager();
     sut.init();
   }
   
@@ -52,7 +52,7 @@ public class ServerManagerTest extends SimpleTest
   {
     saveServers();
     
-    sut = new ServerManager();
+    sut = new LocalhostServerManager();
     sut.init();
     assertEquals(2, sut.getAdjacentServersMap().size());
   }
