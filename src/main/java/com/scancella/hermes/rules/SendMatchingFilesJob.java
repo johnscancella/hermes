@@ -10,7 +10,7 @@ import org.apache.commons.io.filefilter.IOFileFilter;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
-import com.scancella.hermes.core.LoggingObject;
+import com.scancella.hermes.domain.LoggingObject;
 import com.scancella.hermes.network.domain.FileSendingResponse;
 import com.scancella.hermes.network.services.FileSender;
 

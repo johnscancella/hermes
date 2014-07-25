@@ -11,7 +11,7 @@ import java.util.PriorityQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.scancella.hermes.core.LoggingObject;
+import com.scancella.hermes.domain.LoggingObject;
 import com.scancella.hermes.exceptions.NetworkPathNotFound;
 import com.scancella.hermes.network.domain.Edge;
 import com.scancella.hermes.network.domain.Server;

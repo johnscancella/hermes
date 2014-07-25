@@ -3,7 +3,7 @@ package com.scancella.hermes.network.services;
 import java.io.File;
 import java.util.Collection;
 
-import com.scancella.hermes.core.LoggingObject;
+import com.scancella.hermes.domain.LoggingObject;
 import com.scancella.hermes.network.domain.FileSendingResponse;
 
 /**

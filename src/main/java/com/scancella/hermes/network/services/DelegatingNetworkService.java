@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.scancella.hermes.core.LoggingObject;
+import com.scancella.hermes.domain.LoggingObject;
 import com.scancella.hermes.exceptions.NetworkPathNotFound;
 import com.scancella.hermes.network.domain.Server;
 

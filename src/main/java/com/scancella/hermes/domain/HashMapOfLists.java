@@ -1,4 +1,4 @@
-package com.scancella.hermes.core;
+package com.scancella.hermes.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;

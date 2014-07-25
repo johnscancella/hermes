@@ -1,7 +1,5 @@
-package com.scancella.hermes.core;
+package com.scancella.hermes.domain;
 
-
-//@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
 public class JobTriggerInfo
 {
   private String cronTriggerExpression;

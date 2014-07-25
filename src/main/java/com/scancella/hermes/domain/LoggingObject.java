@@ -1,4 +1,4 @@
-package com.scancella.hermes.core;
+package com.scancella.hermes.domain;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,138 +1,41 @@
 package com.scancella.hermes.controllers;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
-
-import org.springframework.core.io.PathResource;
-import org.springframework.core.io.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.scancella.hermes.core.ConfigurationStatus;
-import com.scancella.hermes.core.LoggingObject;
-import com.scancella.hermes.core.StoreableConfiguration;
+import com.scancella.hermes.domain.LoggingObject;
 import com.scancella.hermes.network.domain.Account;
 import com.scancella.hermes.network.domain.Server;
 import com.scancella.hermes.network.responses.AddAccountResponse;
 import com.scancella.hermes.network.responses.setFileTransferPortResponse;
+import com.scancella.hermes.services.ServerManager;
 
 /**
- * Provides a rest interface for querying about the network for this server.
+ * Provides a rest interface for querying about the network for this server, and managing that network.
  */
 @RestController
-public class NetworkRestController extends LoggingObject implements StoreableConfiguration
-{
-  private Map<String, Server> adjacentServers;
-  
-  private static final Resource serverConfigResource = new PathResource("servers.json");
-  
-  @PostConstruct
-  public void init()
-  {
-    adjacentServers = new HashMap<>();
-    restoreConfiguration();
-  }
-  
-  @Override
-  public ConfigurationStatus saveToConfiguration()
-  {
-    logger.debug("Called save configuration!");
-    ConfigurationStatus status = new ConfigurationStatus();
-    
-    try
-    {
-      ObjectMapper mapper = new ObjectMapper();
-      mapper.writerWithDefaultPrettyPrinter().writeValue(serverConfigResource.getFile(), adjacentServers.values());
-      
-      status.setStatusOk(true);
-      status.setStatusMessage("Successfully saved Servers to " + serverConfigResource.getFilename());
-    }
-    catch(Exception e)
-    {
-      logger.error("Error marshalling servers list", e);
-      status.setStatusOk(false);
-      status.setStatusMessage("Failed to save Servers to " + serverConfigResource.getFilename());
-    }
-    
-    return status;
-  }
-
-  @Override
-  public ConfigurationStatus restoreConfiguration()
-  {
-    logger.debug("Called restore configuration!");
-    ConfigurationStatus status = new ConfigurationStatus();
-    
-    if(serverConfigResource.exists())
-    {
-      status = restoreConfigurationFromResource();
-    }
-    else
-    {
-      status.setStatusMessage("No configuration to restore from");
-      status.setStatusOk(true);
-    }
-    
-    return status;
-  }
-  
-  protected ConfigurationStatus restoreConfigurationFromResource()
-  {
-    ConfigurationStatus status = new ConfigurationStatus();
-    
-    try
-    {
-      ObjectMapper mapper = new ObjectMapper();
-      Collection<Server> servers = mapper.readValue(serverConfigResource.getInputStream(), new TypeReference<Collection<Server>>(){});
-      
-      for(Server server : servers)
-      {
-        adjacentServers.put(server.getName(), server);
-      }
-      
-      status.setStatusOk(true);
-      status.setStatusMessage("Successfully restored Servers from " + serverConfigResource.getFilename());
-    }
-    catch(Exception e)
-    {
-      logger.error("Error unmarshalling servers list", e);
-      status.setStatusOk(false);
-      status.setStatusMessage("Failed to restore Servers from " + serverConfigResource.getFilename());
-    }
-    
-    return status;
-  }
-  
-  @Override
-  public Resource getConfigurationResource()
-  {
-    return serverConfigResource;
-  }
+public class NetworkRestController extends LoggingObject
+{  
+  @Autowired
+  private ServerManager serverManager;
   
   @RequestMapping("/getAdjacentServers.do")
   public String getAdjacentServers() throws JsonProcessingException 
   {    
     ObjectMapper mapper = new ObjectMapper();
     
-    return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(adjacentServers.values());
+    return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(serverManager.getAllServers());
   }
   
-  //TODO split out server accounts from server object so I have no fear of returning servers
   @RequestMapping("/addAdjacentServer.do")
   public boolean addAdjacentServer(@RequestParam(value="name", required=true) String serverName, @RequestParam(value="ip", required=true) String ipAddress) 
   {    
     Server adjacentServer = new Server(serverName, ipAddress);
-    adjacentServers.put(serverName, adjacentServer);
-    logger.debug("Added server: [name=" + serverName + "] [ip=" + ipAddress + "]");
-    
-    return true;
+    return serverManager.addServer(adjacentServer);
   }
   
   @RequestMapping("/addServerAccount.do")
@@ -141,48 +44,13 @@ public class NetworkRestController extends LoggingObject implements StoreableCon
       @RequestParam(value="accountpassword", required=true) String accountPassword) 
   {
     Account account = new Account(accountName, accountPassword);
-    return addAccountToServer(serverName, account);
-  }
-  
-  protected synchronized AddAccountResponse addAccountToServer(String serverName, Account account)
-  {
-    if(adjacentServers.containsKey(serverName))
-    {
-      Server adjacentServer = adjacentServers.get(serverName);
-      adjacentServer.setAccount(account);
-      
-      logger.debug("Added account " + account + " to adjacent server " + serverName );
-      
-      return AddAccountResponse.createDefaultSuccess(account, serverName);
-    }
-    
-    return AddAccountResponse.createDoesNotExistFailure(account, serverName);
+    return serverManager.addAccountToServer(serverName, account);
   }
   
   @RequestMapping("/setServerPort.do")
   public setFileTransferPortResponse setFileTransferPort(@RequestParam(value="servername", required=true) String serverName, 
       @RequestParam(value="port", required=true) int port) 
   {
-    if(adjacentServers.containsKey(serverName))
-    {
-      Server adjacentServer = adjacentServers.get(serverName);
-      adjacentServer.setFileTransferPort(port);
-      
-      logger.debug("Added open port " + port + " to adjacent server " + serverName );
-      
-      return setFileTransferPortResponse.createDefaultSuccess(port, serverName);
-    }
-    
-    return setFileTransferPortResponse.createDoesNotExistFailure(port, serverName);
-  }
-
-  public void setAdjacentServers(Map<String, Server> adjacentServers)
-  {
-    this.adjacentServers = adjacentServers;
-  }
-  
-  public Map<String, Server> getAdjacentServersMap()
-  {
-    return adjacentServers;
+    return serverManager.setFileTransferPort(serverName, port);
   }
 }

@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.scancella.hermes.core.ConfigurationStatus;
-import com.scancella.hermes.core.LoggingObject;
-import com.scancella.hermes.core.StoreableConfiguration;
+import com.scancella.hermes.domain.ConfigurationStatus;
+import com.scancella.hermes.domain.LoggingObject;
+import com.scancella.hermes.domain.StoreableConfiguration;
 
 @RestController
 public class StoreableConfigurationController extends LoggingObject

@@ -9,7 +9,7 @@ import org.mockito.Mockito;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 import com.scancella.hermes.SimpleTest;
-import com.scancella.hermes.core.JobTriggerInfo;
+import com.scancella.hermes.domain.JobTriggerInfo;
 import com.scancella.hermes.network.services.FileSender;
 import com.scancella.hermes.network.services.NetworkRouter;
 

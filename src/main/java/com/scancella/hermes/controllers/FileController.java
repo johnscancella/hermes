@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.scancella.hermes.core.ConfigurationStatus;
-import com.scancella.hermes.core.JobTriggerInfo;
-import com.scancella.hermes.core.LoggingObject;
-import com.scancella.hermes.core.StoreableConfiguration;
+import com.scancella.hermes.domain.ConfigurationStatus;
+import com.scancella.hermes.domain.JobTriggerInfo;
+import com.scancella.hermes.domain.LoggingObject;
+import com.scancella.hermes.domain.StoreableConfiguration;
 import com.scancella.hermes.network.services.FileSender;
 import com.scancella.hermes.network.services.NetworkRouter;
 import com.scancella.hermes.rules.FileMatchingRule;

@@ -3,7 +3,7 @@ package com.scancella.hermes.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.scancella.hermes.core.LoggingObject;
+import com.scancella.hermes.domain.LoggingObject;
 import com.scancella.hermes.network.domain.RestService;
 
 @RestController
