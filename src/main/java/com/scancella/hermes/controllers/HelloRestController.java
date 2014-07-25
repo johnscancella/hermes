@@ -21,11 +21,6 @@ public class HelloRestController
   @Qualifier("messageChannel")
   private MessageChannel messageChannel;
   private Logger logger = LoggerFactory.getLogger(HelloRestController.class);
-
-  @RequestMapping("/")
-  public String index() {
-    return "Greetings from Spring Boot!";
-  }
   
   @RequestMapping("/route.do")
   public String echo(@RequestParam(value="route", required=false, defaultValue="DEFAULT ROUTE") String route,
