@@ -10,5 +10,5 @@ public interface FileSender
   /**
    * returns true if was able to send all the files.
    */
-  public FileSendingResponse sendFiles(Collection<File> files);
+  public FileSendingResponse sendFiles(Collection<File> files, String destinationServer);
 }

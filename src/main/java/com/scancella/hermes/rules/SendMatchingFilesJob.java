@@ -34,7 +34,7 @@ public class SendMatchingFilesJob extends LoggingObject implements Runnable
     {
       @SuppressWarnings("unchecked")
       Collection<File> files = FileUtils.listFiles(scanDirectory.getFile(), filter , FileFilterUtils.trueFileFilter());
-      FileSendingResponse response = sender.sendFiles(files);
+      FileSendingResponse response = sender.sendFiles(files, rule.getDestinationServer());
       
       String message = (response.isSuccessful()? "Successfully" : "Unsuccessfully") + " send file!";
       logger.info(message);

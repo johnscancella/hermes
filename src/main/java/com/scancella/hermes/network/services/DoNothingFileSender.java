@@ -12,7 +12,7 @@ import com.scancella.hermes.network.domain.FileSendingResponse;
 public class DoNothingFileSender extends LoggingObject implements FileSender
 {
   @Override
-  public FileSendingResponse sendFiles(Collection<File> files)
+  public FileSendingResponse sendFiles(Collection<File> files, String destinationServer)
   {
     for(File file : files)
     {
