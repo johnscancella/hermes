@@ -15,5 +15,10 @@ public interface NetworkService
   /**
    * Returns the shortest route from one server to another.
    */
-  public List<Server> getShortestRoute(Server from, Server to);
+  public List<Server> getShortestRoute(Server from, String destinationServerName);
+  
+  /**
+   * Returns the shortest route from localhost to another.
+   */
+  public List<Server> getShortestRoute(String destinationServerName);
 }

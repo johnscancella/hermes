@@ -25,11 +25,21 @@ public class NetworkRouter extends LoggingObject
 {
   @Autowired
   private NetworkServerHandler networkServerHandler;
+  
+  private static final Server LOCALHOST = new Server("localhost", "127.0.0.1", null, null);
 
-  public List<Server> computeShortestPath(Server source, Server to) throws NetworkPathNotFound
+  public List<Server> computeShortestPath(Server source, String destinationServerName) throws NetworkPathNotFound
   {
-    Map<Server, Vertex> vertices = constructNetwork(source);    
+    Map<Server, Vertex> vertices = constructNetwork(source);
+    Server to = getServerFromMap(destinationServerName, vertices);
     return computeShortestPath(vertices.get(source), vertices.get(to));
+  }
+  
+  public List<Server> computeShortestPathFromLocalhost(String destinationServerName) throws NetworkPathNotFound
+  {
+    Map<Server, Vertex> vertices = constructNetwork(LOCALHOST);
+    Server to = getServerFromMap(destinationServerName, vertices);
+    return computeShortestPath(vertices.get(LOCALHOST), vertices.get(to));
   }
   
   protected Map<Server, Vertex> constructNetwork(Server source)
@@ -60,6 +70,19 @@ public class NetworkRouter extends LoggingObject
     }
     
     return vertices;
+  }
+  
+  protected Server getServerFromMap(String serverName, Map<Server, Vertex> map)
+  {
+    for(Server server : map.keySet())
+    {
+      if( server.getName().equals(serverName) || server.getIpVersion4().equals(serverName))
+      {
+        return server;
+      }
+    }
+    
+    return null;
   }
 
   protected void updateNetworkMapAndQueue(PriorityQueue<Server> serverQueue, Map<Server, Vertex> vertices,

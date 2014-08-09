@@ -142,7 +142,7 @@ public class FileController extends LoggingObject implements StoreableConfigurat
   }
   
   @RequestMapping("/addDirectorySearch.do")
-  public String addServerAccount(@RequestParam(value="fileregex", required=true) String fileRegex, 
+  public String addDirectoryToSearch(@RequestParam(value="fileregex", required=true) String fileRegex, 
       @RequestParam(value="directory", required=true) String directoryToSearch,
       @RequestParam(value="server", required=true) String serverDestinationName,
       @RequestParam(value="cron", required=false) String cron) 

@@ -25,11 +25,25 @@ public class DelegatingNetworkService extends LoggingObject implements NetworkSe
   }
 
   @Override
-  public List<Server> getShortestRoute(Server from, Server to)
+  public List<Server> getShortestRoute(Server from, String to)
   {
     try
     {
       return networkRouter.computeShortestPath(from, to);
+    }
+    catch(NetworkPathNotFound e)
+    {
+      logger.error("Returning an empty path, cause no path found!", e);
+      return new ArrayList<>();
+    }
+  }
+
+  @Override
+  public List<Server> getShortestRoute(String destinationServerName)
+  {
+    try
+    {
+      return networkRouter.computeShortestPathFromLocalhost(destinationServerName);
     }
     catch(NetworkPathNotFound e)
     {
