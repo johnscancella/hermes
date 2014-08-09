@@ -31,6 +31,7 @@ dependencies {
 	"org.springframework.boot:spring-boot-starter-actuator",
 	'org.springframework.boot:spring-boot-starter-thymeleaf',
 	'org.springframework.integration:spring-integration-core:4.0.3.RELEASE',
+	'org.springframework.integration:spring-integration-ftp:4.0.3.RELEASE',
 	'org.springframework.integration:spring-integration-stream:4.0.3.RELEASE',
 	'commons-collections:commons-collections:3.0',
 	'org.apache.httpcomponents:httpclient:4.1.1',
