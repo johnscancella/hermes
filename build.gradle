@@ -13,6 +13,8 @@ apply plugin: 'eclipse'
 apply plugin: 'application'
 apply plugin: 'spring-boot'
 
+mainClassName = "com.scancella.hermes.Main"
+
 repositories {
     mavenCentral()
     //example for when I implement my own repository, i.e. Nexus
