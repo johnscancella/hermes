@@ -25,11 +25,7 @@ repositories {
 
 dependencies {
 	compile "org.springframework.boot:spring-boot-starter-web:1.1.5.RELEASE",
-	'org.springframework:spring-context:4.0.5.RELEASE',
-	'org.springframework:spring-context-support:4.0.5.RELEASE',
 	'org.quartz-scheduler:quartz:1.8.6',
-	'org.springframework:spring-core:4.0.5.RELEASE',
-	'org.springframework.webflow:spring-webflow:2.3.3.RELEASE', 
 	"org.springframework.boot:spring-boot-starter-actuator:1.1.5.RELEASE",
 	'org.springframework.boot:spring-boot-starter-thymeleaf:1.1.5.RELEASE',
 	'org.springframework.integration:spring-integration-core:4.0.3.RELEASE',
