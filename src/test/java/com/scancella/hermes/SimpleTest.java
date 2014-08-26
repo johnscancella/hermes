@@ -8,11 +8,14 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.junit.Assert;
 import org.junit.ComparisonFailure;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * adds some nice methods to the basic Assert class. Does not start up spring
  * context for faster testing
  */
+@RunWith(MockitoJUnitRunner.class)
 public abstract class SimpleTest extends Assert
 {
   private static final String PATTERN = "yyyy-MM-dd HH:mm:ss";

@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.GenericMessage;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,5 +34,11 @@ public class HelloRestController
     messageChannel.send(helloWorld);
     
     return "Route is: " + route + " and filename is: " + filename;
+  }
+ 
+  //example of real restful server
+  @RequestMapping(value = "/{num1}/add/{num2}", method = RequestMethod.GET)
+  public String getGreeting(@PathVariable Integer num1, @PathVariable Integer num2) {
+    return num1 + " plus " + num2 + " equals " + (num1 + num2);
   }
 }

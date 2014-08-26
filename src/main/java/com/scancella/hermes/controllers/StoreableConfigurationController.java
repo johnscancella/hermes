@@ -37,4 +37,14 @@ public class StoreableConfigurationController extends LoggingObject
     return allSavedCorrectly;
   }
 
+  public List<StoreableConfiguration> getConfigs()
+  {
+    return configs;
+  }
+
+  public void setConfigs(List<StoreableConfiguration> configs)
+  {
+    this.configs = configs;
+  }
+
 }

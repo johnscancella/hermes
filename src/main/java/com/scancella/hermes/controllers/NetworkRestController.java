@@ -23,11 +23,11 @@ public class NetworkRestController extends LoggingObject
   @Autowired
   private LocalhostServerManager serverManager;
   
+  private static final ObjectMapper mapper = new ObjectMapper();
+  
   @RequestMapping("/getAdjacentServers.do")
   public String getAdjacentServers() throws JsonProcessingException 
-  {    
-    ObjectMapper mapper = new ObjectMapper();
-    
+  {
     return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(serverManager.getAllServers());
   }
   
@@ -52,5 +52,15 @@ public class NetworkRestController extends LoggingObject
       @RequestParam(value="port", required=true) int port) 
   {
     return serverManager.setFileTransferPort(serverName, port);
+  }
+
+  public LocalhostServerManager getServerManager()
+  {
+    return serverManager;
+  }
+
+  public void setServerManager(LocalhostServerManager serverManager)
+  {
+    this.serverManager = serverManager;
   }
 }
