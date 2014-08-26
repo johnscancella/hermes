@@ -10,7 +10,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 @XmlRootElement(name="server")
 @XmlAccessorType (XmlAccessType.FIELD)
-public class Server
+public class Server implements Comparable<Server>
 {
   private String name;
   private String ipVersion4;
@@ -110,5 +110,11 @@ public class Server
   public void setAccount(Account account)
   {
     this.account = account;
+  }
+
+  @Override
+  public int compareTo(Server o)
+  {
+    return this.getIpVersion4().compareTo(o.getIpVersion4());
   }
 }

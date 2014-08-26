@@ -79,12 +79,14 @@ public class FileControllerTest extends SimpleTest
     jobTrigger1.setDestinationServer("destinationServer1");
     jobTrigger1.setFileMatchingRegex("fileMatchingRegex1");
     jobTrigger1.setScanDirectory("scanDirectory1");
+    sut.getJobsAndTriggers().add(jobTrigger1);
     
     JobTriggerInfo jobTrigger2 = new JobTriggerInfo();
     jobTrigger2.setCronTriggerExpression("*/10 * * * * *");
     jobTrigger2.setDestinationServer("destinationServer2");
     jobTrigger2.setFileMatchingRegex("fileMatchingRegex2");
     jobTrigger2.setScanDirectory("scanDirectory2");
+    sut.getJobsAndTriggers().add(jobTrigger2);
     
     Set<JobTriggerInfo> jobTriggerInfos = new HashSet<>();
     sut.addJobsAndTriggersToScheduler(jobTriggerInfos);

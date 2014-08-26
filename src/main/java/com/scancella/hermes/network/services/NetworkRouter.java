@@ -62,6 +62,7 @@ public class NetworkRouter extends LoggingObject
         catch(Exception e)
         {
           logger.warn("Could not get adjacent server list for " + currentServer);
+          logger.error("Error is: ", e);
         }
         
         // mark the server as visited so we don't get endless loops
@@ -85,6 +86,7 @@ public class NetworkRouter extends LoggingObject
     return null;
   }
 
+  //TODO something is wrong here, each vertex only ever has one adjacent edge which is wrong...
   protected void updateNetworkMapAndQueue(PriorityQueue<Server> serverQueue, Map<Server, Vertex> vertices,
       Server currentServer, Collection<Server> adjacentServers)
   {
@@ -137,7 +139,7 @@ public class NetworkRouter extends LoggingObject
         Vertex adjacentVertex = edge.getTarget();
         double distanceThroughCurrentVertex = currentVertex.getMinDistance() + edge.getWeight();
         
-        if( adjacentVertex.getServer().equals(to.getServer()) )
+        if( adjacentVertex.getServer().getIpVersion4().equals(to.getServer().getIpVersion4()) )
         {
           adjacentVertex.setMinDistance(distanceThroughCurrentVertex);
           adjacentVertex.setPrevious(currentVertex);
