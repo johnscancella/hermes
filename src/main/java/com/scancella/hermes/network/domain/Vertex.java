@@ -21,6 +21,7 @@ public class Vertex implements Comparable<Vertex>
     return server.getName();
   }
 
+  @Override
   public int compareTo(Vertex other)
   {
     return Double.compare(minDistance, other.minDistance);
