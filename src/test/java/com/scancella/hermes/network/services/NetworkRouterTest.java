@@ -46,7 +46,10 @@ public class NetworkRouterTest extends SimpleTest
     Mockito.when(mockNetworkServerHandler.getAdjacentServersFromServer(server5)).thenReturn(Arrays.asList(server2, server3));
     
     List<Server> path = sut.computeShortestPath(server1, "5");
-    System.err.println(path);
+    assertEquals(3, path.size());
+    assertEquals(server1, path.get(0));
+    assertEquals(server2, path.get(1));
+    assertEquals(server5, path.get(2));
   }
   
   @Test
@@ -80,11 +83,11 @@ public class NetworkRouterTest extends SimpleTest
   @Test(expected=NetworkPathNotFound.class)
   public void testWhenNoPathExists() throws NetworkPathNotFound
   {
-    Server server1 = new Server("server1", null);
-    Server server2 = new Server("server2", null);
-    Server server3 = new Server("server3", null);
-    Server server4 = new Server("server4", null);
-    Server server5 = new Server("server5", null);
+    Server server1 = new Server("server1", "1");
+    Server server2 = new Server("server2", "2");
+    Server server3 = new Server("server3", "3");
+    Server server4 = new Server("server4", "4");
+    Server server5 = new Server("server5", "5");
     
     Vertex v1 = new Vertex(server1);
     Vertex v2 = new Vertex(server2);
