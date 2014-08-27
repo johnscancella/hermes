@@ -19,9 +19,9 @@ import com.scancella.hermes.network.responses.AddAccountResponse;
 import com.scancella.hermes.network.responses.setFileTransferPortResponse;
 import com.scancella.hermes.services.LocalhostServerManager;
 
-public class NetworkRestControllerTest extends RestfulTest
+public class NetworkControllerTest extends RestfulTest
 {
-  private NetworkRestController sut;
+  private NetworkController sut;
   
   @Mock
   private LocalhostServerManager mockLocalhostServerManager;
@@ -29,7 +29,7 @@ public class NetworkRestControllerTest extends RestfulTest
   @Override
   public Object getSut()
   {
-    sut = new NetworkRestController();
+    sut = new NetworkController();
     sut.setServerManager(mockLocalhostServerManager);
     return sut;
   }

@@ -20,7 +20,7 @@ public class FtpChannelHandler
 {
   private final LinkedHashMap<String, MessageChannel> channels = new LinkedHashMap<String, MessageChannel>();
   private final Map<MessageChannel, ConfigurableApplicationContext> contexts = new HashMap<MessageChannel, ConfigurableApplicationContext>();
-  private static final String[] XML_CONFIGs = new String[] {"/META-INF/spring/integration/dynamic-ftp-outbound-adapter-context.xml"}; 
+  private static final String[] XML_CONFIGs = new String[] {"/META-INF/spring/integration/dynamic-ftp-outbound-adapter-context.xml"}; //TODO replace with my own context template
   
   public MessageChannel findChannel(Server server)
   {

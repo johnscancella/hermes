@@ -18,7 +18,7 @@ import com.scancella.hermes.services.LocalhostServerManager;
  * Provides a rest interface for querying about the network for this server, and managing that network.
  */
 @RestController
-public class NetworkRestController extends LoggingObject
+public class NetworkController extends LoggingObject
 {  
   @Autowired
   private LocalhostServerManager serverManager;
