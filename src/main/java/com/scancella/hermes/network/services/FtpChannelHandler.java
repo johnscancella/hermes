@@ -13,6 +13,9 @@ import org.springframework.messaging.MessageChannel;
 
 import com.scancella.hermes.network.domain.Server;
 
+/**
+ * Handles creating and managing spring contexts for each server. Based off the example of the dynamic ftp from spring integration examples
+ */
 public class FtpChannelHandler
 {
   private final LinkedHashMap<String, MessageChannel> channels = new LinkedHashMap<String, MessageChannel>();
