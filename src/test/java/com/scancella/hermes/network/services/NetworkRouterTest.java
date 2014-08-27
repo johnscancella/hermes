@@ -31,7 +31,7 @@ public class NetworkRouterTest extends SimpleTest
   }
   
   @Test
-  public void testComputeShortestPath() throws Exception
+  public void testFindValidPathUsingServers() throws Exception
   {
     Server server1 = new Server("server1", "1");
     Server server2 = new Server("server2", "2");
@@ -53,7 +53,7 @@ public class NetworkRouterTest extends SimpleTest
   }
   
   @Test
-  public void testFindValidPath() throws NetworkPathNotFound
+  public void testFindValidPathUsingVertexes() throws NetworkPathNotFound
   {
     Server server1 = new Server("server1", "1");
     Server server2 = new Server("server2", "2");
@@ -81,7 +81,7 @@ public class NetworkRouterTest extends SimpleTest
   }
   
   @Test(expected=NetworkPathNotFound.class)
-  public void testWhenNoPathExists() throws NetworkPathNotFound
+  public void testWhenNoPathExistsUsingVertexes() throws NetworkPathNotFound
   {
     Server server1 = new Server("server1", "1");
     Server server2 = new Server("server2", "2");
@@ -102,5 +102,37 @@ public class NetworkRouterTest extends SimpleTest
     v4.setAdjacencies(Arrays.asList(new Edge(v1, 1.0), new Edge(v3, 1.0)));
     
     sut.computeShortestPath(v1, v5);
+  }
+  
+  @Test(expected=NetworkPathNotFound.class)
+  public void testWhenNoPathExistsUsingServers() throws Exception
+  {
+    Server server1 = new Server("server1", "1");
+    
+    sut.computeShortestPath(server1, "6");
+  }
+  
+  @Test
+  public void testFindValidPathFromLocalhost() throws Exception
+  {
+    Server server1 = new Server("server1", "1");
+    Server server2 = new Server("server2", "2");
+    Server server3 = new Server("server3", "3");
+    Server server4 = new Server("server4", "4");
+    Server server5 = new Server("server5", "5");
+    Server localHost = sut.getLocalhost();
+    
+    List<Server> expectedServerPath = Arrays.asList(localHost, server2, server5);
+    
+    Mockito.when(mockNetworkServerHandler.getAdjacentServersFromServer(localHost)).thenReturn(Arrays.asList(server2, server3, server4));
+    Mockito.when(mockNetworkServerHandler.getAdjacentServersFromServer(server1)).thenReturn(Arrays.asList(server2, server3, server4));
+    Mockito.when(mockNetworkServerHandler.getAdjacentServersFromServer(server2)).thenReturn(Arrays.asList(server1, server5));
+    Mockito.when(mockNetworkServerHandler.getAdjacentServersFromServer(server3)).thenReturn(Arrays.asList(server1, server4, server5));
+    Mockito.when(mockNetworkServerHandler.getAdjacentServersFromServer(server4)).thenReturn(Arrays.asList(server1, server3));
+    Mockito.when(mockNetworkServerHandler.getAdjacentServersFromServer(server5)).thenReturn(Arrays.asList(server2, server3));
+    Mockito.when(mockNetworkServerHandler.getAdjacentServersFromServer(server5)).thenReturn(Arrays.asList(server2, server3));
+    
+    List<Server> path = sut.computeShortestPathFromLocalhost("5");
+    assertEquals("The expected should be from server1 to server2 to server5", expectedServerPath, path);
   }
 }

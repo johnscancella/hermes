@@ -26,12 +26,15 @@ public class NetworkRouter extends LoggingObject
   @Autowired
   private NetworkServerHandler networkServerHandler;
   
-  private static final Server LOCALHOST = new Server("localhost", "127.0.0.1", null, null);
+  private final Server LOCALHOST = new Server("localhost", "127.0.0.1", null, null);
 
-  public List<Server> computeShortestPath(Server source, String destinationServerName) throws NetworkPathNotFound
+  public List<Server> computeShortestPath(Server source, String serverIp) throws NetworkPathNotFound
   {
     Map<Server, Vertex> vertices = constructNetwork(source);
-    Server to = getServerFromMap(destinationServerName, vertices);
+    Server to = getServerFromMap(serverIp, vertices);
+    if(to == null){
+      throw new NetworkPathNotFound(serverIp + " does not exist in this network. Perhaps you need to add it to the list of servers?");
+    }
     return computeShortestPath(vertices.get(source), vertices.get(to));
   }
   
@@ -51,25 +54,47 @@ public class NetworkRouter extends LoggingObject
     serverQueue.add(source);
     while(!serverQueue.isEmpty())
     {
-      Server currentServer = serverQueue.poll();
-      if( visitedServers.get(currentServer) == null || visitedServers.get(currentServer) == false )
-      {
-        try
-        {
-          Collection<Server> adjacentServers = networkServerHandler.getAdjacentServersFromServer(currentServer);
-          updateNetworkMapAndQueue(serverQueue, vertices, currentServer, adjacentServers);
-        }
-        catch(Exception e)
-        {
-          logger.warn("Could not get adjacent server list for " + currentServer, e);
-        }
-        
-        // mark the server as visited so we don't get endless loops
-        visitedServers.put(currentServer, true);
-      }
+      processQueueItem(serverQueue, visitedServers, vertices);
+    }
+    
+    if(logger.isDebugEnabled())
+    {
+      logger.debug(formatNetworkMap(vertices));
     }
     
     return vertices;
+  }
+  
+  protected void processQueueItem(PriorityQueue<Server> serverQueue, Map<Server, Boolean> visitedServers, Map<Server, Vertex> vertices)
+  {
+    Server currentServer = serverQueue.poll();
+    if( visitedServers.get(currentServer) == null || visitedServers.get(currentServer) == false )
+    {
+      try
+      {
+        Collection<Server> adjacentServers = networkServerHandler.getAdjacentServersFromServer(currentServer);
+        updateNetworkMapAndQueue(serverQueue, vertices, currentServer, adjacentServers);
+      }
+      catch(Exception e)
+      {
+        logger.warn("Could not get adjacent server list for " + currentServer, e);
+      }
+      
+      // mark the server as visited so we don't get endless loops
+      visitedServers.put(currentServer, true);
+    }
+  }
+  
+  protected String formatNetworkMap(Map<Server, Vertex> vertices)
+  {
+    StringBuilder sb = new StringBuilder();
+    sb.append("Servers found: ");
+    for(Server server : vertices.keySet())
+    {
+      sb.append(server).append(",");
+    }
+    
+    return sb.toString();
   }
   
   protected Server getServerFromMap(String serverName, Map<Server, Vertex> map)
@@ -190,5 +215,10 @@ public class NetworkRouter extends LoggingObject
   public void setNetworkServerHandler(NetworkServerHandler adjacentServerHandler)
   {
     this.networkServerHandler = adjacentServerHandler;
+  }
+
+  public Server getLocalhost()
+  {
+    return LOCALHOST;
   }
 }
