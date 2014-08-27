@@ -18,11 +18,13 @@ public class SendMatchingFilesJob extends LoggingObject implements Runnable
 {
   private final FileMatchingRule rule;
   private final FileSender sender;
+  private final String destinationDir;
   
-  public SendMatchingFilesJob(FileMatchingRule rule, FileSender sender)
+  public SendMatchingFilesJob(FileMatchingRule rule, FileSender sender, String destinationDir)
   {
     this.rule = rule;
     this.sender = sender;
+    this.destinationDir = destinationDir;
   }
   
   @Override
@@ -34,7 +36,7 @@ public class SendMatchingFilesJob extends LoggingObject implements Runnable
     {
       @SuppressWarnings("unchecked")
       Collection<File> files = FileUtils.listFiles(scanDirectory.getFile(), filter , FileFilterUtils.trueFileFilter());
-      FileSendingResponse response = sender.sendFiles(files, rule.getDestinationServer());
+      FileSendingResponse response = sender.sendFiles(files, rule.getDestinationServer(), destinationDir);
       
       String message = (response.isSuccessful()? "Successfully" : "Unsuccessfully") + " send file!";
       logger.info(message);

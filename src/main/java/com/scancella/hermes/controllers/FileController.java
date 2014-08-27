@@ -128,7 +128,7 @@ public class FileController extends LoggingObject implements StoreableConfigurat
     for(JobTriggerInfo info : infos)
     {
       FileMatchingRule rule = new FileMatchingRule(info.getFileMatchingRegex(), info.getScanDirectory(), info.getDestinationServer());
-      SendMatchingFilesJob job = new SendMatchingFilesJob(rule, fileSender);
+      SendMatchingFilesJob job = new SendMatchingFilesJob(rule, fileSender, info.getDestinationDirectory());
       CronTrigger trigger = createTrigger(info.getCronTriggerExpression());
       
       taskScheduler.schedule(job, trigger);
@@ -145,10 +145,11 @@ public class FileController extends LoggingObject implements StoreableConfigurat
   public String addDirectoryToSearch(@RequestParam(value="fileregex", required=true) String fileRegex, 
       @RequestParam(value="directory", required=true) String directoryToSearch,
       @RequestParam(value="server", required=true) String serverDestinationName,
+      @RequestParam(value="destDir", required=true) String destinationDir,
       @RequestParam(value="cron", required=false) String cron) 
   {    
     FileMatchingRule rule = new FileMatchingRule(fileRegex, directoryToSearch, serverDestinationName);
-    SendMatchingFilesJob job = new SendMatchingFilesJob(rule, fileSender);
+    SendMatchingFilesJob job = new SendMatchingFilesJob(rule, fileSender, destinationDir);
     
     CronTrigger trigger = createTrigger(cron);
     taskScheduler.schedule(job, trigger);

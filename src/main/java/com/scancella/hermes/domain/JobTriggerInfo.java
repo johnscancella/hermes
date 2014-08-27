@@ -6,6 +6,7 @@ public class JobTriggerInfo
   private String fileMatchingRegex;
   private String scanDirectory;
   private String destinationServer;
+  private String destinationDirectory;
 
   public String getCronTriggerExpression()
   {
@@ -45,5 +46,15 @@ public class JobTriggerInfo
   public void setDestinationServer(String destinationServer)
   {
     this.destinationServer = destinationServer;
+  }
+
+  public String getDestinationDirectory()
+  {
+    return destinationDirectory;
+  }
+
+  public void setDestinationDirectory(String destinationDirectory)
+  {
+    this.destinationDirectory = destinationDirectory;
   }
 }

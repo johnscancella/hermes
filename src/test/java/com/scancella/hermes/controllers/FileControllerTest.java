@@ -59,7 +59,7 @@ public class FileControllerTest extends SimpleTest
   @Test
   public void testAddDirectoryToSearch() throws Exception
   {
-    URI uri = new URI("/addDirectorySearch.do?fileregex=.*&directory=C:/Users/jscancella&server=foo");
+    URI uri = new URI("/addDirectorySearch.do?fileregex=.*&directory=C:/Users/jscancella&server=foo&destDir=C:/Users/jscancella");
     mockMvc.perform(get(uri))
     .andExpect(status().isOk())
     .andExpect(content().string("Scheduled directory search"));

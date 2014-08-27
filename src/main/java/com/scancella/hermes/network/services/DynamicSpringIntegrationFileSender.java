@@ -18,7 +18,7 @@ public class DynamicSpringIntegrationFileSender extends LoggingObject implements
   private NetworkService router;
 
   @Override
-  public FileSendingResponse sendFiles(Collection<File> files, String destinationServer)
+  public FileSendingResponse sendFiles(Collection<File> files, String destinationServer, String destinationDir)
   {
     // TODO Auto-generated method stub
 //    * psedocode
