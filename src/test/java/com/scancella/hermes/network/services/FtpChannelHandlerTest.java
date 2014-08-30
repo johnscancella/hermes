@@ -32,7 +32,7 @@ public class FtpChannelHandlerTest extends SimpleTest
   {
     String destinationDir = "/tmp/foo";
     
-    ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String [] {"/META-INF/ftpOutboundAdapterContextTemplate.xml"}, false);
+    ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(FtpChannelHandler.getXmlConfigs(), false);
     ConfigurableApplicationContext setContext = sut.setFtpSettings(context, server, destinationDir);
     
     ConfigurableEnvironment env = setContext.getEnvironment();
@@ -49,5 +49,7 @@ public class FtpChannelHandlerTest extends SimpleTest
     
     MessageChannel channel = sut.createChannel(server, destinationDir);
     assertNotNull(channel);
+    assertEquals(1, sut.getChannels().size());
+    assertEquals(1, sut.getContexts().size());
   }
 }

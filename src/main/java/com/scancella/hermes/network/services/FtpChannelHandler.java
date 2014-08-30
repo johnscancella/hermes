@@ -59,4 +59,19 @@ public class FtpChannelHandler
     
     return ctx;
   }
+
+  public LinkedHashMap<String, MessageChannel> getChannels()
+  {
+    return channels;
+  }
+
+  public Map<MessageChannel, ConfigurableApplicationContext> getContexts()
+  {
+    return contexts;
+  }
+
+  public static String[] getXmlConfigs()
+  {
+    return XML_CONFIGs;
+  }
 }
