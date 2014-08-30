@@ -20,11 +20,11 @@ public class FtpChannelHandler
 {
   private final LinkedHashMap<String, MessageChannel> channels = new LinkedHashMap<String, MessageChannel>();
   private final Map<MessageChannel, ConfigurableApplicationContext> contexts = new HashMap<MessageChannel, ConfigurableApplicationContext>();
-  private static final String[] XML_CONFIGs = new String[] {"/META-INF/spring/integration/dynamic-ftp-outbound-adapter-context.xml"}; //TODO replace with my own context template
+  private static final String[] XML_CONFIGs = new String[] {"/META-INF/ftpOutboundAdapterContextTemplate.xml"};
   
   public MessageChannel findChannel(Server server)
   {
-    return this.channels.get(server.getIpVersion4());
+    return channels.get(server.getIpVersion4());
   }
   
   public synchronized MessageChannel createChannel(Server server, String destinationDir)
@@ -32,18 +32,18 @@ public class FtpChannelHandler
     MessageChannel channel = channels.get(server.getIpVersion4());
     if (channel == null) 
     {
-      ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext(XML_CONFIGs, false);
-      setFtpSettings(ctx, server, destinationDir);
+      ConfigurableApplicationContext springContext = new ClassPathXmlApplicationContext(XML_CONFIGs, false);
+      setFtpSettings(springContext, server, destinationDir);
       
-      channel = ctx.getBean("toFtpChannel", MessageChannel.class);
+      channel = springContext.getBean("toFtpChannel", MessageChannel.class);
       channels.put(server.getIpVersion4(), channel);
-      contexts.put(channel, ctx);
+      contexts.put(channel, springContext);
     }
     
     return channel;
   }
   
-  private ConfigurableApplicationContext setFtpSettings(ConfigurableApplicationContext ctx, Server server, String destinationDir) {
+  protected ConfigurableApplicationContext setFtpSettings(ConfigurableApplicationContext ctx, Server server, String destinationDir) {
     StandardEnvironment env = new StandardEnvironment();
     
     Properties props = new Properties();
