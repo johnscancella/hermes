@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Wireframe for my web application</title>
+    <link href="../css/bootstrap.css" rel="stylesheet"></link>
+    <link href="../css/dashboard.css" rel="stylesheet"></link>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li>
+            <!--<button type="button" class="btn btn-default" aria-label="Left Align">button1</button>-->
+              <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle btn-block" type="button" id="userdropdownMenu" data-toggle="dropdown" aria-expanded="true"><span class="glyphicon glyphicon-user"></span> Users
+                        <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="userdropdownMenu">
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-plus"></span> Add</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-minus"></span> Delete</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><span class="glyphicon glyphicon-edit"></span> Modify</a></li>
+                </ul>
+              </div>
+            </li>
+          </ul> <!--end ul nav sidebar -->
+        </div><!-- end sidebar -->
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Servers</h1>
+        </div><!-- end main -->
+      </div> <!--end row -->
+    </div><!-- end container fluid-->
+    <!--<div id="first_div">
+      <h4>hello</h4>
+      <h1> Big Hello </h1>
+    </div>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="../js/bootstrap.js"></script>
+  </body>
+</html>
